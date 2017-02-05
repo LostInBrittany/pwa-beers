@@ -51,7 +51,7 @@ Then you can go to the `Application` tab on Chrome Developer Tools. On this tab 
 - The Service Worker, whether it's installed and/or running or not
 - The offline storage (local storage, IndexedDb, WebSQL...)
 
- [![Shop app](../img/shop-app-02.t.jpg)](../img/shop-app-02.jpg)
+ [![Shop app](../img/shop-app-02.t.png)](../img/shop-app-02.png)
 
 You won't be able to easily test the application on your phone, as Service Workers asks for an HTTPS server. But you can go to the [official deployed version](https://shop.polymer-project.org/) of the app and test it now.
 
@@ -62,17 +62,16 @@ Now let's understand a bit how does it work:
 
 The Shop app is made up of several main views: the home view, list view, detail view, and shopping cart view:
 
-<div style="display:flex; flex-flow: row wrap;  justify-content:space-around; max-width:100%;">
-  <div style="max-width:300px;"><img src="../img/shop-browse.png" alt="Shop App" style="width:100%;" /></div>
-  <div style="max-width:300px;"><img src="../img/shop-detail.png" alt="Shop App" style="width:100%;" /></div>
-  <div style="max-width:300px;"><img src="../img/shop-cart.png" alt="Shop App" style="width:100%;" /></div>
-</div>   
+ [![Shop app - home view](../img/shop-home.t.png)](../img/shop-home.png)
+ [![Shop app - list view](../img/shop-browse.t.png)](../img/shop-browse.png)
+ [![Shop app - detail view](../img/shop-detail.t.png)](../img/shop-detail.png)
+ [![Shop app - shopping cart view](../img/shop-cart.t.png)](../img/shop-cart.png)
 
 The app uses custom elements as its organizing principle: A top-level application element serves as the main controller for the app. App-specific elements build views, such as the browse and detail views. The stores for user and product data are also implemented as elements. These elements are in turn composed of reusable elements, like buttons and tabs. Reusable elements also supply other essential functions, including overall layout and routing. The [`<iron-pages>`](https://elements.polymer-project.org/elements/iron-pages) element controls which view is currently visible.
 
-<div style="display:flex; justify-content:space-around; max-width:100%;">
-<div style="max-width:500px;"><img src="../img/shop-high-level-arch.png" alt="Shop App" style="width:100%;" /></div>
-</div>  
+
+ [![Shop app - Architecture](../img/shop-high-level-arch.t.png)](../img/shop-high-level-arch.png)
+
 
 ## Routing
 
@@ -91,7 +90,7 @@ More information:
 
 ## Views
 
-The main views of the element are controlled by an [`<iron-pages>`]((https://elements.polymer-project.org/elements/iron/pages) element, which displays a single view at a time. When a view is active, it takes over the whole content area below the app header.
+The main views of the element are controlled by an [`<iron-pages>`](https://elements.polymer-project.org/elements/iron/pages) element, which displays a single view at a time. When a view is active, it takes over the whole content area below the app header.
 
 The `<iron-pages>` element is bound to the app element's page property, which is in turn set based on the current route. The view switching code looks like this:
 
@@ -205,16 +204,20 @@ The app layout elements provide a responsive layout for the Shop. The elements a
 
 On desktop, the browse view uses a second toolbar, with a set of navigation tabs. As you scroll down the page, the header condenses and scrolls away. Scrolling up the page at any point reveals the tabs.
 
-<div style="display:flex; flex-flow: row wrap;  justify-content:space-around; max-width:100%;">
-  <div style="max-width:300px;"><img src="../img/shop-toolbar-expanded.png" alt="Shop App" style="width:100%;" /></div>
-  <div style="max-width:300px;"><img src="../img/shop-toolbar-condensed.png" alt="Shop App" style="width:100%;" /></div>
-</div>   
+
+
+ [![Shop app - Toolbar expanded](../img/shop-toolbar-expanded.t.png)](../img/shop-toolbar-expanded.png)
+ [![Shop app - Toolbar condensed](../img/shop-toolbar-condensed.t.png)](../img/shop-toolbar-condensed.png)
 
 The tabs don't work as well on mobile devices, so Shop uses an <app-drawer> element as a navigation drawer, with a vertical menu.
 
-<div style="display:flex; flex-flow: row wrap;  justify-content:space-around; max-width:100%;">
-  <div style="max-width:300px;"><img src="../img/shop-home.png" alt="Shop App" style="width:100%;" /></div>
-  <div style="max-width:300px;"><img src="../img/shop-drawer.png" alt="Shop App" style="width:100%;" /></div>
-</div>   
+
+ [![Shop app - Without drawer](../img/shop-home.t.png)](../img/shop-home.png)
+ [![Shop app - With drawer](../img/shop-drawer.t.png)](../img/shop-drawer.png)
 
 The app layout element set also includes simple container elements for positioning headers and drawers: the `<app-header-layout>` and `<app-drawer-layout>` elements.
+
+
+## Next
+
+Now you've seem a PWA with Polymer it's time to go to [Step 01](../step-01/) and begin coding yours!

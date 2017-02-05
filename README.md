@@ -96,6 +96,8 @@ Then you'll be able to use `polymer`command to create, build and serve your PWA.
 
 As the computers used for the courses haven't Git, we have structured the project to allow a Git-less use. The `app` directory is the main directory of the project, the working version of the code. The tutorial is divided in steps, each one in its own directory:
 
+- [Step 00 - Anatomy of a Progressive Web App with Polymer](./step-00/)
+
 In each step directory you have a README file that explain the objective of the step, that you will do in the working directory `app`. If you have problems or if you get lost, you also have the solution of each step in the step directories. So if you want to see the intended result of  the 6th step, you can point your browser to http://localhost:8080/step-06/index.html
 
 
