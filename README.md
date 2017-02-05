@@ -51,8 +51,6 @@ If you already have a web server (Apache, Nginx, ...) in your computer, you can 
   [![Web Server for Chrome](img/chromewebserver-01.t.png)](img/chromewebserver-01.png)
 
 
-  <div style="display:flex; justify-content:space-around; max-width:100%;"><div style="max-width:300px;"><img src="img/chromewebserver-01.png" alt= "Web Server for Chrome" style="width:100%;" /></div></div>
-
   Now you choose as folder to serve the root of this repository. We also suggest to run it on port 8080. You launch the server and open a browser window navigate to http://localhost:8000/test.html to verify that everything is good
 
 - Using Python: if you have Python in your system, the easiest way would be to run the embedded SimpleHTTPServer. Go to the project directory and run
