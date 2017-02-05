@@ -1,10 +1,10 @@
-# Step 01 - An empty application
+# PWA Beers - Step 01 - An empty application
 
 After the precedent step, this one is going to be easy: you're going to generate and explore an empty app with Polymer.
 
-> As in the precedent case, if you don't have Polymer CLI installed, don't panic. You simple get the code of the `step-00` folder and copy it in the `app` folder and the content of `bower_components` folder inside `step-01/bower_components`.
+> As in the precedent case, if you don't have Polymer CLI installed, don't panic. You simple getuncompress the `empty-app.zip` file into the `app` folder and copy the content of `bower_components` folder inside `step-01/bower_components`.
 >
-> You can then directly go to the 
+> You can then directly go to the [Explore your app](explore-your-app) section.
 
 
 ## Generating the empty app
@@ -66,7 +66,7 @@ Check out your new project README for information about what to do next.
 
 Now launch `polymer serve` (or your webserver) in order to test the empty application. Point your browser to your local serve (http://localhost:8080 when using `polyserve`) and you see... a nice empty page.
 
-[![Shop app](../img/empty-app.t.jpg)](../img/empty-app.jpg)
+[![Empty app](../img/empty-app.t.jpg)](../img/empty-app.jpg)
 
 On `index.html`:
 ```HTML

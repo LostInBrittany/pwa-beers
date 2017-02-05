@@ -1,5 +1,9 @@
 <link rel="import" href="/bower_components/polymer/polymer.html">
 
+<link rel="import" href="/bower_components/app-route/app-location.html">
+<link rel="import" href="/bower_components/app-route/app-route.html">
+<link rel="import" href="/bower_components/iron-pages/iron-pages.html">
+
 <dom-module id="pwa-app">
   <template>
     <style>
@@ -7,7 +11,15 @@
         display: block;
       }
     </style>
-    <h2>Hello [[prop1]]</h2>
+
+    <app-location route="{{route}}" use-hash-as-path></app-location>
+    <app-route route="{{route}}" pattern="/:page" data="{{routeData}}" tail="{{subroute}}"></app-route>
+
+    <iron-pages selected="[[page]]" attr-for-selected="name" fallback-selection="lost">
+      <div name="main"><h1>Beer list</h1></div>
+      <div name="bye"><h1>Beer details</h1></div>
+      <div name="lost"><h1>It`s seem I'm lost...</h1></div>
+    </iron-pages>
   </template>
 
   <script>
@@ -20,6 +32,24 @@
           type: String,
           value: 'pwa-app',
         },
+      },
+
+      observers: [
+        '_routePageChanged(routeData.page)',
+      ],    
+
+      // *********************************************************************
+      // Observers
+      // *********************************************************************
+
+      _routePageChanged: function(page) {
+        console.debug("[pwa-app] _routePageChanged", page);
+        if (!page) {
+          window.history.replaceState({}, null, "#/main");
+          window.dispatchEvent(new CustomEvent('location-changed'));
+          return;
+        }
+        this.page = page;
       },
 
     });
