@@ -1,7 +1,3 @@
----
-title: A tutorial on PWA with Polymer 1.x. With beers.
----
-
 # A tutorial on PWA with Polymer 1.x. With beers.
 
 *A work-in-progress tutorial for creating a Progressive Web App (PWA) with Polymer 1.x*
@@ -49,7 +45,7 @@ If you already have a web server (Apache, Nginx, ...) in your computer, you can 
   And then on the *Web Server for Chrome* logo to configure the server:
 
 
-  <div style="display:flex; justify-content:space-around; max-width:100%;"><div style="max-width:500px;"><img src="img/chromewebserver-01.png" alt= "Web Server for Chrome" style="width:100%;" /></div></div>
+  <div style="display:flex; justify-content:space-around; max-width:100%;"><div style="max-width:300px;"><img src="img/chromewebserver-01.png" alt= "Web Server for Chrome" style="width:100%;" /></div></div>
 
   Now you choose as folder to serve the root of this repository. We also suggest to run it on port 8080. You launch the server and open a browser window navigate to http://localhost:8000/test.html to verify that everything is good
 
