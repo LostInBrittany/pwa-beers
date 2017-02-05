@@ -253,4 +253,4 @@ And then, play a bit with your element, add some text, images, CSS, make yoursel
 
 ## Next
 
-After this step you have a working web application with Polymer. Now you're going to create your first element, the beer list, in the [step 02](../step-02/) and begin coding yours!
+After this step you have a working web application with Polymer. Now you're going to create your first element, the beer list, in the [step-02](../step-02/) and begin coding yours!

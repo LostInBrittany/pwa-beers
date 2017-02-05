@@ -1,4 +1,4 @@
-# Step 00 - Anatomy of a Progressive Web App with Polymer
+# PWA Beers - Step 00 - Anatomy of a Progressive Web App with Polymer
 
 This is the initial step of the tutorial. In this step you won't need to code, everything is already coded for you.
 
@@ -220,4 +220,4 @@ The app layout element set also includes simple container elements for positioni
 
 ## Next
 
-Now you've seem a PWA with Polymer it's time to go to [Step 01](../step-01/) and begin coding yours!
+Now you've seem a PWA with Polymer it's time to go to [step-01](../step-01/) and begin coding yours!
