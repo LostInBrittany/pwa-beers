@@ -40,9 +40,15 @@ If you already have a web server (Apache, Nginx, ...) in your computer, you can 
 
   After installing the Web Server for Chrome app, click on the Apps shortcut on the bookmarks bar:
 
-  <div style="display:flex; justify-content:space-around; max-width:100%;"><div style="max-width:500px;"><img src="img/chromewebserver-00.png" alt= "Web Server for Chrome" style="width:100%;" /></div></div>
 
+
+  [![Web Server for Chrome](img/chromewebserver-00.t.png)](img/chromewebserver-00.png)
+
+  
   And then on the *Web Server for Chrome* logo to configure the server:
+
+
+  [![Web Server for Chrome](img/chromewebserver-01.t.png)](img/chromewebserver-01.png)
 
 
   <div style="display:flex; justify-content:space-around; max-width:100%;"><div style="max-width:300px;"><img src="img/chromewebserver-01.png" alt= "Web Server for Chrome" style="width:100%;" /></div></div>
