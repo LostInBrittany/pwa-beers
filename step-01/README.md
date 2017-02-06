@@ -169,7 +169,7 @@ On `src/pwa-app/pwa-app.html`:
 
 Now the field `page` from the `routeData` property will change when the fragment of the URL (the part after the `#`) changes, keeping the value of the first path element in the URL fragment.
 
-As `page` is a subproperty of a property, Polymer 1.x doesn't track its changes (Polymer 2.0 will do it, and you won't need this kind of hack). We are going to declare an explicit observer to track its value, and then, if we have no route, we are going to point the browser to the `#/main` route
+As `page` is a subproperty of a property, Polymer 1.x doesn't track its changes (Polymer 2.0 will do it, and you won't need this kind of hack). We are going to declare an explicit observer to track its value, and then, if we have no route, we are going to point the browser to the `#/list` route
 
 On `src/pwa-app/pwa-app.html`:
 ```JS
@@ -183,7 +183,7 @@ observers: [
 _routePageChanged: function(page) {
   console.debug("[pwa-app] _routePageChanged", page);
   if (!page) {
-    window.history.replaceState({}, null, "#/main");
+    window.history.replaceState({}, null, "#/list");
     window.dispatchEvent(new CustomEvent('location-changed'));
     return;
   }
@@ -234,13 +234,13 @@ If no element match, it will use the  `fallback-selection` value.
 
 ```HTML
 <iron-pages selected="[[page]]" attr-for-selected="name" fallback-selection="lost">
-  <div name="main"><h1>Beer list</h1></div>
-  <div name="bye"><h1>Beer details</h1></div>
+  <div name="list"><h1>Beer list</h1></div>
+  <div name="details"><h1>Beer details</h1></div>
   <div name="lost"><h1>It`s seem I'm lost...</h1></div>
 </iron-pages>
 ```
 
-Now test it by going to `http://localhost:8080/`, `http://localhost:8080/#/main`,  `http://localhost:8080/#/bye`,  `http://localhost:8080/#/wtf` (supposing that your server is set to listen port 8080, of course).
+Now test it by going to `http://localhost:8080/`, `http://localhost:8080/#/list`,  `http://localhost:8080/#/details`,  `http://localhost:8080/#/wtf` (supposing that your server is set to listen port 8080, of course).
 
 
 ## To go deeper
