@@ -128,7 +128,7 @@ On `src/pwa-app/pwa-app.html`:
 
 ## Add some routing
 
-Now we are going to add routing to our empty app. We begin by adding `app-route` to your dependencies:
+Now we are going to add routing to our empty app. We begin by adding `app-route` to our dependencies:
 
 On `bower.json`:
 ```json

@@ -6,6 +6,7 @@ I have built this [PWA with Polymer]() tutorial as a quick entry point to coding
 
 For the last several years, I've taught a web-development module in an Engineering School with a rather restrictive network. As I plan to use this tutorial in next year module, in order to explain PWA and Polymer to our students, I needed a tutorial that could be played without network acces, i.e. without Bower or Gulp or even without [Polymer CLI](https://github.com/Polymer/polymer-cli). So *Progreessive Web Apps with Polymer* needed to be able to be done even behind a very restrictive proxy, and all the dependencies are included inside the git project.
 
+![Logo](/img/logo-500px.png)
 
 ## What are the objectives of this tutorial ##
 
@@ -99,6 +100,8 @@ As the computers used for the courses haven't Git, we have structured the projec
 0. [Anatomy of a Progressive Web App with Polymer](./step-00/)
 0. [An empty application](./step-01/)
 0. [Creating a new element](./step-02/)
+0. [A list of Beers](./step-03/)
+0. [Adding full text search](./step-04/)
 
 In each step directory you have a README file that explain the objective of the step, that you will do in the working directory `app`. If you have problems or if you get lost, you also have the solution of each step in the step directories. So if you want to see the intended result of  the 6th step, you can point your browser to http://localhost:8080/step-06/index.html
 
