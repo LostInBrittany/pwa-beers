@@ -124,7 +124,10 @@ And use it inside the `main` case of the `iron-pages` section of `src/pwa-app/pw
 ```html
   <iron-pages selected="[[page]]" attr-for-selected="name" fallback-selection="lost">
     <div name="main">
-      <h1>Beer list</h1>        
+      <paper-toolbar>
+        <div class="logo"><img src="/img/logo_bw-60px.png"></div>
+        <div class="title">Beer list</div>
+      </paper-toolbar>        
       <beer-list></beer-list>
     </div>
     <div name="bye"><h1>Beer details</h1></div>

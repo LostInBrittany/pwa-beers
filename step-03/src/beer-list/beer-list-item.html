@@ -1,5 +1,7 @@
 <!-- Import Polymer library -->
 <link rel="import" href="/bower_components/polymer/polymer.html">
+<!-- Import paper-material -->
+<link rel="import" href="/bower_components/paper-material/paper-material.html">
 
 <dom-module id="beer-list-item">
   <template>
@@ -7,15 +9,14 @@
       .beer {
         margin: 10px;
         padding: 10px;
-        border: solid 1px black;
-        border-radius: 10px;
+        background-color: white;
         min-height: 50px;
       }
     </style>
-    <div class="beer">
+    <paper-material class="beer">
       <h2>{{name}}</h2>
       <p>{{description}}</p>
-    </div>
+    </paper-material>
   </template>
   <script>
     Polymer({
