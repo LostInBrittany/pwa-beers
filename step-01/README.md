@@ -1,4 +1,4 @@
-# PWA Beers - Step 01 - An empty application
+# ![](/img/logo-25px.png) PWA Beers - Step 01 - An empty application
 
 After the precedent step, this one is going to be easy: you're going to generate and explore an empty app with Polymer.
 

@@ -1,4 +1,4 @@
-# PWA Beers - Step 02 - Beer list element
+# ![](/img/logo-25px.png) PWA Beers - Step 02 - Beer list element
 
 In this step we are going to use our first Polymer element, a very simple custom `beer-list-item`.
 By using it you will see how easily you can add Polymer widgets to your normal web applications.
@@ -80,7 +80,7 @@ As we have seem in the precedent step, using Polymer elements inside other eleme
 
 ## What must I do?
 
-Inside the `iron-pages` section of `src/pwa-app/pwa-app.html` you`re going to expand the `main`case by
+Inside the `iron-pages` section of `src/pwa-app/pwa-app.html` you're going to expand the `main` case by
 adding two `beer-list-items` elements: 
 
 ```html

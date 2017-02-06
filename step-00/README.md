@@ -1,4 +1,4 @@
-# PWA Beers - Step 00 - Anatomy of a Progressive Web App with Polymer
+# ![](/img/logo-25px.png) PWA Beers - Step 00 - Anatomy of a Progressive Web App with Polymer
 
 This is the initial step of the tutorial. In this step you won't need to code, everything is already coded for you.
 
