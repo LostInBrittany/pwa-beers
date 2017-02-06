@@ -3,6 +3,57 @@
 In this step we are going to use our first Polymer element, a very simple custom `beer-list-item`.
 By using it you will see how easily you can add Polymer widgets to your normal web applications.
 
+## Material design
+
+We are going to give a [Material Design](https://material.io/guidelines/) look to our application, by using some of the Polymer [Paper Elements](https://elements.polymer-project.org/browse?package=paper-elements). We will be using [`paper-toolbar`](https://elements.polymer-project.org/elements/paper-toolbar) to add a main toolbar to the application, and [`paper-material`](https://elements.polymer-project.org/elements/paper-material) to add a paper card for each beer.
+
+We begin by adding `paper-toolbar` and `paper-material` to our dependencies:
+
+On `bower.json`:
+```json
+{
+  "name": "pwa-beers",
+  "description": "A tutorial on PWA with Polymer 1.x",
+  "main": "index.html",
+  "dependencies": {
+    "polymer": "Polymer/polymer#^1.4.0",
+    "app-route": "PolymerElements/app-route#^0.9.3",
+    "iron-pages": "PolymerElements/iron-pages#^1.0.8",
+    "iron-selector": "PolymerElements/iron-selector#^1.5.2",
+    "paper-toolbar": "PolymerElements/paper-toolbar#^1.1.7",
+    "paper-material": "PolymerElements/paper-material#^1.0.6"
+  },
+  "devDependencies": {
+    "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
+    "iron-demo-helpers": "PolymerElements/iron-demo-helpers#^1.0.0",
+    "web-component-tester": "^4.0.0",
+    "webcomponentsjs": "webcomponents/webcomponentsjs#^0.7.0"
+  }
+}
+```
+
+And in `./src/pwa-main/pwa-main.html` we import `paper-toolbar` :
+
+```HTML
+<link rel="import" href="/bower_components/paper-toolbar/paper-toolbar.html">
+```
+
+and then we replace the `h1` tags inside `iron-pages` by a `paper-toolbar`:
+
+```HTML
+<iron-pages selected="[[page]]" attr-for-selected="name" fallback-selection="lost">
+  <div name="list">
+    <paper-toolbar>
+      <div class="logo"><img src="/img/logo_bw-60px.png"></div>
+      <div class="title">Beer list</div>
+    </paper-toolbar>
+  </div>
+  <div name="details"><h1>Beer details</h1></div>
+  <div name="lost"><h1>It`s seem I'm lost...</h1></div>
+```
+
+
+
 
 ## The custom element
 
@@ -22,6 +73,9 @@ Our custom element is very simple at this step:
 ```html
 <!-- Import Polymer library -->
 <link rel="import" href="/bower_components/polymer/polymer.html">
+<!-- Import paper-material -->
+<link rel="import" href="/bower_components/paper-material/paper-material.html">
+
 
 <dom-module id="beer-list-item">
   <template>
@@ -29,15 +83,14 @@ Our custom element is very simple at this step:
       .beer {
         margin: 10px;
         padding: 10px;
-        border: solid 1px black;
-        border-radius: 10px;
+        background-color: white;
         min-height: 50px;
       }
     </style>
-    <div class="beer">
+    <paper-material class="beer">
       <h2>{{name}}</h2>
       <p>{{description}}</p>
-    </div>
+    </paper-material>
   </template>
   <script>
     Polymer({
