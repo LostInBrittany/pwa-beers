@@ -6,6 +6,7 @@
 
 <link rel="import" href="/bower_components/paper-toolbar/paper-toolbar.html">
 
+<link rel="import" href="../beer-list/beer-list.html">
 <link rel="import" href="../beer-list/beer-list-item.html">
 
 <dom-module id="pwa-app">
@@ -24,15 +25,8 @@
         <paper-toolbar>
           <div class="logo"><img src="/img/logo_bw-60px.png"></div>
           <div class="title">Beer list</div>
-        </paper-toolbar>
-        <beer-list-item
-          name="Affligem Blond"
-          description="Affligem Blonde, the classic clear blonde abbey ale, with a gentle roundness and 6.8%..."
-        ></beer-list-item>
-        <beer-list-item
-          name="Affligem Tripel"
-          description="The king of the abbey beers. It is amber-gold and pours with a deep head and original..."
-        ></beer-list-item>
+        </paper-toolbar>     
+        <beer-list></beer-list>
       </div>
       <div name="details"><h1>Beer details</h1></div>
       <div name="lost"><h1>It`s seem I'm lost...</h1></div>

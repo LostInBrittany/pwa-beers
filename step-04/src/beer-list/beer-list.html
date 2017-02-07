@@ -1,0 +1,106 @@
+<link rel="import" href="/bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+
+<link rel="import" href="/bower_components/paper-input/paper-input.html">
+<link rel="import" href="/bower_components/paper-material/paper-material.html">
+
+<!-- Our beer-list will generate `beer-list-item` elements, so we import it -->
+<link rel="import" href="./beer-list-item.html">
+
+<dom-module id="beer-list">
+  <template>
+    <!-- local DOM for your element -->
+    <style include="iron-flex iron-flex-alignment">
+      paper-material {
+        margin: 10px;
+        padding: 10px;
+        background-color: white;
+      }
+      .sidebar {
+        min-width: 150px; 
+        min-height: 50px;
+      }
+      .sidebar paper-input {
+        margin-bottom: 16px;
+      }
+      .beers {
+        min-width: 400px; 
+      }
+    </style>
+
+    <div class="layout horizontal wrap start center-justified">
+      <paper-material class="sidebar">
+        <!--Sidebar content-->
+        <div>Search: <paper-input value="{{filterText}}"></paper-input></div>
+        <div>Current search:</div> 
+        <div>{{filterText}}</div>
+      </paper-material>
+      <div class="beers layout flex" >
+        <template id="beerList" is="dom-repeat" items="{{beers}}" filter="beerFilter">
+          <beer-list-item name="{{item.name}}" description="{{item.description}}">
+          </beer-list-item>
+        </template>
+
+        <paper-material>Number of beers in list: {{currentBeers}}</paper-material>  
+      </div>        
+    </div>
+  </template>
+
+  <script>
+    // element registration
+    Polymer({
+      is: "beer-list",
+      // add properties and methods on the element's prototype
+      properties: {
+        beers: {
+          type: Array,
+          // When initializing a property to an object or array value, use a function to ensure that each element
+          // gets its own copy of the value, rather than having an object or array shared across all instances of the element
+          value: function() { return []; }
+        },
+        filterText: {
+          type: String,
+          observer: "filterTextChanged",
+          value: ""
+        },
+        currentBeers: {
+          type: String,
+          computed: "getCurrentBeers(beers, filterText)"
+        }
+      },
+      ready: function() {
+        this.beers = [
+          {
+            alcohol: 8.5,
+            name: "Affligem Tripel",
+            description: "The king of the abbey beers. It is amber-gold and pours with a deep head and original aroma, delivering a complex, full bodied flavour. Pure enjoyment! Secondary fermentation in the bottle."
+          },
+          {
+            alcohol: 9.2,
+            name: "Rochefort 8",
+            description: "A dry but rich flavoured beer with complex fruity and spicy flavours."
+          },
+          {
+            alcohol: 7,
+            name: "Chimay Rouge",
+            description: "This Trappist beer possesses a beautiful coppery colour that makes it particularly attractive. Topped with a creamy head, it gives off a slight fruity apricot smell from the fermentation. The aroma felt in the mouth is a balance confirming the fruit nuances revealed to the sense of smell. This traditional Belgian beer is best savoured at cellar temperature "
+          }
+        ];
+      },
+      filterTextChanged: function(newValue, oldValue) {
+        this.$.beerList.render();
+      },
+      beerFilter:  function(item) {
+        return item.name.match(new RegExp(this.filterText, 'i'));
+      },     
+      getCurrentBeers: function() {
+        var current = 0;
+        for (var i in this.beers) {
+          if (this.beerFilter(this.beers[i])) {
+            current++;
+          }
+        }
+        return current;        
+      }, 
+    });
+  </script>
+</dom-module>
