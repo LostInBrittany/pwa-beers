@@ -1,0 +1,77 @@
+<link rel="import" href="/bower_components/polymer/polymer.html">
+
+<link rel="import" href="/bower_components/app-route/app-location.html">
+<link rel="import" href="/bower_components/app-route/app-route.html">
+<link rel="import" href="/bower_components/iron-pages/iron-pages.html">
+
+<link rel="import" href="/bower_components/paper-toolbar/paper-toolbar.html">
+
+<link rel="import" href="../beer-list/beer-list.html">
+<link rel="import" href="../beer-list/beer-list-item.html">
+
+<link rel="import" href="../beer-details/beer-details.html">
+
+<dom-module id="pwa-app">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+
+    <app-location route="{{route}}" use-hash-as-path></app-location>
+    <app-route route="{{route}}" pattern="/:page" data="{{routeData}}" tail="{{subroute}}"></app-route>
+    <app-route route="{{route}}" pattern="/details/:id" data="{{detailsData}}"></app-route>
+
+    <iron-pages selected="[[page]]" attr-for-selected="name" fallback-selection="lost">
+      <div name="list">
+        <paper-toolbar>
+          <div class="logo"><img src="/img/logo_bw-60px.png"></div>
+          <div class="title">Beer list</div>
+        </paper-toolbar>     
+        <beer-list></beer-list>
+      </div>
+      <div name="details">        
+        <paper-toolbar>
+          <div class="logo"><img src="/img/logo_bw-60px.png"></div>
+          <div class="title">Beer details</div>
+        </paper-toolbar>  
+        <beer-details id="[[detailsData.id]]"></beer-details>   
+      </div>
+      <div name="lost"><h1>It`s seem I'm lost...</h1></div>
+    </iron-pages>
+  </template>
+
+  <script>
+    Polymer({
+
+      is: 'pwa-app',
+
+      properties: {
+        prop1: {
+          type: String,
+          value: 'pwa-app',
+        },
+      },
+
+      observers: [
+        '_routePageChanged(routeData.page)',
+      ],    
+
+      // *********************************************************************
+      // Observers
+      // *********************************************************************
+
+      _routePageChanged: function(page) {
+        console.debug("[pwa-app] _routePageChanged", page);
+        if (!page) {
+          window.history.replaceState({}, null, "#/list");
+          window.dispatchEvent(new CustomEvent('location-changed'));
+          return;
+        }
+        this.page = page;
+      },
+
+    });
+  </script>
+</dom-module>
