@@ -148,7 +148,7 @@ And we add some CSS to make things prettier:
   </style>
 ```
 
-![Screenshot](/img/step-06_01.jpg)  
+[![Screenshot](/img/step-06_01.t.jpg)](/img/step-06_01.jpg)  
 
 
 ## Next
