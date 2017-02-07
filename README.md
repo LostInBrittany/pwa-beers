@@ -97,13 +97,13 @@ Then you'll be able to use `polymer`command to create, build and serve your PWA.
 
 As the computers used for the courses haven't Git, we have structured the project to allow a Git-less use. The `app` directory is the main directory of the project, the working version of the code. The tutorial is divided in steps, each one in its own directory:
 
-0. [Anatomy of a Progressive Web App with Polymer](./step-00/)
-0. [An empty application](./step-01/)
-0. [Creating a new element](./step-02/)
-0. [A list of Beers](./step-03/)
-0. [Adding full text search](./step-04/)
-0. [Sorting the list](./ste-05/)
-0. [Doing some AJAX](./step-06/)
+- [Step 00 - Anatomy of a Progressive Web App with Polymer](./step-00/)
+- [Step 01 - An empty application](./step-01/)
+- [Step 02 - Creating a new element](./step-02/)
+- [Step 03 - A list of Beers](./step-03/)
+- [Step 04 - Adding full text search](./step-04/)
+- [Step 05 - Sorting the list](./ste-05/)
+- [Step 06 - Doing some AJAX](./step-06/)
 
 In each step directory you have a README file that explain the objective of the step, that you will do in the working directory `app`. If you have problems or if you get lost, you also have the solution of each step in the step directories. So if you want to see the intended result of  the 6th step, you can point your browser to http://localhost:8080/step-06/index.html
 
