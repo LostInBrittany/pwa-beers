@@ -203,7 +203,7 @@ And then we modify the sort to inverse the order if the `descendingSort` propert
     }
 ```
 
-![Screenshot](/img/step-05_01.jpg)
+[![Screenshot](/img/step-05_01.t.jpg)](/img/step-05_01.jpg)
 
 ## Next
 
