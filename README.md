@@ -109,6 +109,7 @@ As the computers used for the courses haven't Git, we have structured the projec
 - [Step 05 - Sorting the list](./ste-05/)
 - [Step 06 - Doing some AJAX](./step-06/)
 - [Step 07 - Beer details](./step-07/)
+- [Step 08 - Putting the *P* into PWA](./step-08/)
 
 In each step directory you have a README file that explain the objective of the step, that you will do in the working directory `app`. If you have problems or if you get lost, you also have the solution of each step in the step directories. So if you want to see the intended result of  the 6th step, you can point your browser to http://localhost:8080/step-06/index.html
 
