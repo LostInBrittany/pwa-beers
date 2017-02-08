@@ -59,11 +59,11 @@ and then we replace the `h1` tags inside `iron-pages` by a `paper-toolbar`:
 
 We are adding a custom `beer-list-item` Polymer element that will be stored in the `src/beer-list` folder.
 
-A Polymer element definition is composed of two parts inside a `dom-model` declaration:
+A Polymer element definition is composed of two parts inside a `dom-module` declaration:
 
 * A  `template` defining the local DOM for the element and the CSS rules that apply to this local DOM.
 
-* A `Polymer` element registration linking the `dom-model` and it's behavior and making it available to the application.
+* A `Polymer` element registration linking the `dom-module` and it's behavior and making it available to the application.
 
 You will get (lots of) more details on custom element definition on further steps, by now this should be enough.
 
@@ -121,20 +121,15 @@ As we have seem in the precedent step, using Polymer elements inside other eleme
 1. Use the element as a new HTML tag
   ```html
   <beer-list-item
-    name="Affligem Blond"
-    description="Affligem Blonde, the classic clear blonde abbey ale, with a gentle roundness and 6.8%..."
-  ></beer-list-item>
-  
-  <beer-list-item
-    name="Affligem Tripel"
-    description="The king of the abbey beers. It is amber-gold and pours with a deep head and original..."
+    name="The name of a beer"
+    description="The description of a beer"
   ></beer-list-item>
   ```
 
 ## What must I do?
 
 Inside the `iron-pages` section of `src/pwa-app/pwa-app.html` you're going to expand the `main` case by
-adding two `beer-list-items` elements: 
+adding two `beer-list-items` elements:
 
 ```html
 <beer-list-item
@@ -229,4 +224,3 @@ You will see that you need to do it inside the `style` block of the `dom-model` 
 ## Summary
 
 You have added our first Polymer custom web component to our app. Now go to [step-03](../step-03/) to see how to create another element to automatically generate the beer list.
-

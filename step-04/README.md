@@ -1,6 +1,6 @@
 # ![](/img/logo-25px.png) PWA Beers - Step 04 - Adding full text search
 
-> This is an optional step, that helps you dive deeper into Polymer. If your main interest in *PWA Beers* is the PWA aspect, you can simply copy the content of the `step-03` folder into your working folder `app`.
+> This is an optional step, that helps you dive deeper into Polymer. If your main interest in *PWA Beers* is the PWA aspect, you can simply copy the content of the `step-04` folder into your working folder `app`.
 
 We did a lot of work in laying a foundation for the app in the last step, so now we'll do something simple;
 we will add full text search (yes, it will be simple!).
@@ -15,14 +15,39 @@ We need to add a  [`paper-input`](https://elements.polymer-project.org/elements/
 
 This lets a user enter search criteria and immediately see the effects of their search on the beer list.  
 
-Let's begin by importing the `iron-flex-layout` and `paper-input` elements:
+Let's begin by adding `iron-flex-layout` and `paper-input` to our `bower.json` and doing a `bower install` to get the dependencies:
+
+```json
+{
+  "name": "pwa-beers",
+  "description": "A tutorial on PWA with Polymer 1.x",
+  "main": "index.html",
+  "dependencies": {
+    "polymer": "Polymer/polymer#^1.4.0",
+    "app-route": "PolymerElements/app-route#^0.9.3",
+    "iron-pages": "PolymerElements/iron-pages#^1.0.8",
+    "iron-selector": "PolymerElements/iron-selector#^1.5.2",
+    "paper-toolbar": "PolymerElements/paper-toolbar#^1.1.7",
+    "paper-material": "PolymerElements/paper-material#^1.0.6",
+    "paper-input": "PolymerElements/paper-input#^1.1.23"
+  },
+  "devDependencies": {
+    "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
+    "iron-demo-helpers": "PolymerElements/iron-demo-helpers#^1.0.0",
+    "web-component-tester": "^4.0.0",
+    "webcomponentsjs": "webcomponents/webcomponentsjs#^0.7.0"
+  }
+}
+```
+
+And then, let's import both components into `beer-list`:
 
 ```html
 <link rel="import" href="/bower_components/iron-flex-layout/iron-flex-layout-classes.html">
 <link rel="import" href="/bower_components/paper-input/paper-input.html">
 ```
 
-then we notify to our element that we want it to use the `iron-flex-layout` shared styles, we add some CSS rules, and we place the `paper-input`:
+We notify to our element that we want it to use the `iron-flex-layout` shared styles, we add some CSS rules, and we place the `paper-input`:
 
 ```html
 <dom-module id="beer-list">
@@ -35,11 +60,11 @@ then we notify to our element that we want it to use the `iron-flex-layout` shar
         background-color: white;
       }
       .sidebar {
-        min-width: 150px; 
+        min-width: 150px;
         min-height: 50px;
       }
       .beers {
-        min-width: 400px; 
+        min-width: 400px;
       }
     </style>
     <div class="layout horizontal wrap start center-justified">
@@ -55,7 +80,7 @@ then we notify to our element that we want it to use the `iron-flex-layout` shar
 
         <paper-material>Number of beers in list: {{beers.length}}</paper-material>  
       </div>        
-    </div> 
+    </div>
   </template>
 ```
 
@@ -69,7 +94,7 @@ and we add a label under it to show the current value of `filterText`:
 
 ```html
 <div>Search: <paper-input value="{{filterText}}"></paper-input></div>
-<div>Current search:</div> 
+<div>Current search:</div>
 <div>{{filterText}}</div>
 
 ```

@@ -33,9 +33,7 @@ This `build` command  generates two builds, a *bundled* one where resources are 
 
 ## Testing the Shop app
 
-In order to test the built PWA, launch your web server at `/pwa-example/build/bundled` and go with your browser to `http://localhost:8000/`.
-
-> Remember, the Polymer CLI `build` command  generates two builds, a *bundled* one where resources are grouped according to the fragments described on the `polymer.json` file, and an *unboundled* one where each element remains in it's own file. If you're using HTTP 1.x, you should serve the bundled version, and if you're using an HTTP2 server, then go for the unbundled.
+In order to test the built PWA, launch your web server at `/pwa-example/build/bundled` and go with your browser to `http://localhost:8080/`.
 
 Here the app in a wide screen laptop:
 
@@ -44,14 +42,14 @@ Here the app in a wide screen laptop:
 And here the app in a smartphone:
 
  [![Shop app](../img/shop-app-01.t.jpg)](../img/shop-app-01.jpg)
- 
+
 Then you can go to the `Application` tab on Chrome Developer Tools. On this tab you have details on many of the *progressive* capabilities of your app:
 
 - The Manifest, whether it's valid or not, and info about its contents
 - The Service Worker, whether it's installed and/or running or not
 - The offline storage (local storage, IndexedDb, WebSQL...)
 
- [![Shop app](../img/shop-app-02.t.png)](../img/shop-app-02.png)
+ [![Shop app](../img/shop-app-02.t.jpg)](../img/shop-app-02.jpg)
 
 You won't be able to easily test the application on your phone, as Service Workers asks for an HTTPS server. But you can go to the [official deployed version](https://shop.polymer-project.org/) of the app and test it now.
 

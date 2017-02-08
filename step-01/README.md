@@ -93,7 +93,8 @@ On `index.html`:
 ```
 
 As you can see, `index.html` is a simple shell loading web components polyfill and importing your main element, `<pwa-app>`.
-Right now it doesn't do lots of things... but we are going to do something about that right now.
+
+Right now this `pwa-app` is a very simple Polymer element:
 
 On `src/pwa-app/pwa-app.html`:
 ```HTML
@@ -125,6 +126,8 @@ On `src/pwa-app/pwa-app.html`:
   </script>
 </dom-module>
 ```
+
+We are going to play with it to give it some nice features as routing...
 
 ## Add some routing
 
@@ -191,7 +194,7 @@ _routePageChanged: function(page) {
 },
 ```
 
-Now you have a working routing system. We are going to create to * pages* for your app now.
+Now you have a working routing system. We are going to create two *pages* for your app now, one for the beer list, another for beer details.
 
 
 ## Adding two *pages*
@@ -240,16 +243,49 @@ If no element match, it will use the  `fallback-selection` value.
 </iron-pages>
 ```
 
-Now test it by going to `http://localhost:8080/`, `http://localhost:8080/#/list`,  `http://localhost:8080/#/details`,  `http://localhost:8080/#/wtf` (supposing that your server is set to listen port 8080, of course).
+Now test it by going to `http://localhost:8080/`, `http://localhost:8080/#/list`,  `http://localhost:8080/#/details`,  `http://localhost:8080/#/wtf`.
 
 
 ## To go deeper
 
 ### Create and use three empty elements
 
-As a last exercise, we proprose you to replace the three *divs* inside the `<iron-pages>` by three custom elements: `<pwa-main>`, `<pwa-bye>` and `<pwa-lost>` that you're goint to create in an `elements` folder inside `app`.
+As a last exercise, we propose you to replace the three *divs* inside the `<iron-pages>` by three custom elements: `<pwa-list>`, `<pwa-details>` and `<pwa-lost>` that you're going to create in an `elements` folder inside `app`.
 
-And then, play a bit with your element, add some text, images, CSS, make yourself a bit at home with Polymer.
+As we saw at the beginning of this step, an empty Polymer element has a very simple structure: a `dom-module` tag with the `template` (the element's UI) and the Polymer declaration inside:
+
+```HTML
+<link rel="import" href="/bower_components/polymer/polymer.html">
+
+<dom-module id="empty-element">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <h2>Hello [[prop1]]</h2>
+  </template>
+
+  <script>
+    Polymer({
+
+      is: 'empty-element',
+
+      properties: {
+        prop1: {
+          type: String,
+          value: 'world',
+        },
+      },
+
+    });
+  </script>
+</dom-module>
+```
+In order to use it inside `pwa-app` you need to import it and then use it as a new cutom HTML tag.
+
+Play a bit with your elements, add some text, images, CSS, make yourself a bit at home with Polymer.
 
 ## Next
 

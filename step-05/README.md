@@ -1,6 +1,6 @@
 # ![](/img/logo-25px.png) PWA Beers - Step 05 - Sorting the list
 
-> This is an optional step, that helps you dive deeper into Polymer. If your main interest in *PWA Beers* is the PWA aspect, you can simply copy the content of the `step-03` folder into your working folder `app`.
+> This is an optional step, that helps you dive deeper into Polymer. If your main interest in *PWA Beers* is the PWA aspect, you can simply copy the content of the `step-05` folder into your working folder `app`.
 
 In this step, you will add a feature to let your users control the order of the items in the beer list. The dynamic ordering is implemented by creating a new model property, wiring it together with the repeater, and letting the data binding magic do the rest of the work.
 
@@ -101,7 +101,7 @@ We import `paper-dropdown-menu.html` in our `beer-list` element, and we add a `p
 <paper-material class="sidebar">
   <!--Sidebar content-->
   <div>Search: <paper-input value="{{filterText}}"></paper-input></div>
-  <div>Current search:</div> 
+  <div>Current search:</div>
   <div>{{filterText}}</div>
   <div>  
     Sort by:
@@ -110,7 +110,7 @@ We import `paper-dropdown-menu.html` in our `beer-list` element, and we add a `p
         <template is="dom-repeat" items="{{criteria}}">
           <paper-item data-name="[[item.dataName]]">[[item.label]]</paper-item>
         </template>
-      </paper-listbox> 
+      </paper-listbox>
     </paper-dropdown-menu>
   </div>        
 </paper-material>
@@ -164,7 +164,7 @@ We could use an specific paper element, like [`paper-checkbox`](https://elements
   <paper-material class="sidebar">
     <!--Sidebar content-->
     <div>Search: <paper-input value="{{filterText}}"></paper-input></div>
-    <div>Current search:</div> 
+    <div>Current search:</div>
     <div>{{filterText}}</div>
     <div>  
       Sort by:
@@ -173,11 +173,11 @@ We could use an specific paper element, like [`paper-checkbox`](https://elements
           <template is="dom-repeat" items="{{criteria}}">
             <paper-item data-name="[[item.dataName]]">[[item.label]]</paper-item>
           </template>
-        </paper-listbox> 
+        </paper-listbox>
       </paper-dropdown-menu>
     </div>             
     <div>
-      <input type="checkbox" checked="{{descendingSort::change}}" name="sortingOrder"> 
+      <input type="checkbox" checked="{{descendingSort::change}}" name="sortingOrder">
       Descending sort
     </div>   
   </paper-material>
