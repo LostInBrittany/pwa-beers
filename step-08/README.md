@@ -18,6 +18,24 @@ In order to make our app *progressive*, we need service workers to manage the of
 </script>
 ```
 
+## Making all your imports relative
+
+Polymer CLI doesn't like absolute paths in imports, and in some configurations it blocks the build.
+
+Go to each one of your components and make the links relative, using `app` as base directory.
+
+Example, for `src/beer-list/beer-list.html`:
+```html
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+
+<link rel="import" href="../../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../../bower_components/paper-listbox/paper-listbox.html">
+<link rel="import" href="../../bower_components/paper-material/paper-material.html">
+```
+
 ## Making sure that everything is served by your server
 
 If we want to be able to use Service Worker to locally cache all the resources of your app, you need to serve all the resources from your webserver.
@@ -129,18 +147,19 @@ This is a file that lives at the top-level of the project and contains the build
 ```json
 {
   "entrypoint": "index.html",
-  "shell": "/src/pwa-app/pwa-app.html",
+  "shell": "src/pwa-app/pwa-app.html",
   "fragments": [
-    "/src/beer-list/beer-list.html",
-    "/src/beer-details/beer-details.html",  
+    "src/beer-list/beer-list.html",
+    "src/beer-details/beer-details.html"
   ],
   "sourceGlobs": [
-   "images/**/*",
+    "data/**/*",
+    "img/**/*",
     "bower_components/font-roboto/fonts/**"
   ],
   "includeDependencies": [
-    "/manifest.json",
-    "/bower_components/webcomponentsjs/webcomponents-lite.min.js"
+    "manifest.json",
+    "bower_components/webcomponentsjs/webcomponents-lite.min.js"
   ]
 }
 ```
@@ -171,7 +190,29 @@ module.exports = {
     '/bower_components/webcomponentsjs/webcomponents-lite.min.js'
   ],
   navigateFallback: 'index.html',
-  navigateFallbackWhitelist: [/^(?!.*\.html$|\/data\/).*/]
+  navigateFallbackWhitelist: [/^(?!.*\.html$|\/data\/).*/],
+  runtimeCaching: [
+    {
+      urlPattern: /\/img\/.*/,
+      handler: 'cacheFirst',
+      options: {
+        cache: {
+          maxEntries: 200,
+          name: 'items-cache'
+        }
+      }
+    },
+    {
+      urlPattern: /\/data\/.*json/,
+      handler: 'fastest',
+      options: {
+        cache: {
+          maxEntries: 100,
+          name: 'data-cache'
+        }
+      }
+    }
+  ]
 };
 ```
 
