@@ -32,7 +32,7 @@ On `bower.json`:
 }
 ```
 
-And in `./src/pwa-main/pwa-main.html` we import `paper-toolbar` :
+And in `./src/pwa-app/pwa-app.html` we import `paper-toolbar` :
 
 ```HTML
 <link rel="import" href="/bower_components/paper-toolbar/paper-toolbar.html">
