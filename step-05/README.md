@@ -105,7 +105,7 @@ We import `paper-dropdown-menu.html` in our `beer-list` element, and we add a `p
   <div>{{filterText}}</div>
   <div>  
     Sort by:
-    <paper-dropdown-menu selected-item="{{criterium}}">
+    <paper-dropdown-menu selected-item="{{criterion}}">
       <paper-listbox class="dropdown-content" selected="0">
         <template is="dom-repeat" items="{{criteria}}">
           <paper-item data-name="[[item.dataName]]">[[item.label]]</paper-item>
@@ -127,14 +127,15 @@ Then we modify the sort function to sort according to the chosen property:
 
 ```javascript
   beerSorter: function(a, b) {  
-    if ( a[this.criterium.dataName] === b[this.criterium.dataName] ) return 0;
-    if ( a[this.criterium.dataName] < b[this.criterium.dataName] ) return -1;
-    if ( a[this.criterium.dataName] > b[this.criterium.dataName] ) return 1;      
+    if (!this.criterion) return 0;
+    if ( a[this.criterion.dataName] === b[this.criterion.dataName] ) return 0;
+    if ( a[this.criterion.dataName] < b[this.criterion.dataName] ) return -1;
+    if ( a[this.criterion.dataName] > b[this.criterion.dataName] ) return 1;      
   }
 ```
 
 
-And, as in last step, we add an observer to `criterium` to make it run a new sort when it changes:
+And, as in last step, we add an observer to `criterion` to make it run a new sort when it changes:
 
 ```javascript
   properties: {
@@ -142,8 +143,8 @@ And, as in last step, we add an observer to `criterium` to make it run a new sor
       type: String,
       observer: "criteriaChanged"
     },
-    criterium: {
-      type: String,
+    criterion: {
+      type: Object,
       observer: "criteriaChanged"
     }
   },
@@ -168,7 +169,7 @@ We could use an specific paper element, like [`paper-checkbox`](https://elements
     <div>{{filterText}}</div>
     <div>  
       Sort by:
-      <paper-dropdown-menu selected-item="{{criterium}}">
+      <paper-dropdown-menu selected-item="{{criterion}}">
         <paper-listbox class="dropdown-content"  selected="0">
           <template is="dom-repeat" items="{{criteria}}">
             <paper-item data-name="[[item.dataName]]">[[item.label]]</paper-item>
@@ -194,12 +195,13 @@ We could use an specific paper element, like [`paper-checkbox`](https://elements
 And then we modify the sort to inverse the order if the `descendingSort` property is true:
 
 ```javascript
-    beerSorter: function(a, b) {
+    beerSorter: function(a, b) {      
+      if (!this.criterion) return 0;
       var invert = 1;
       if (this.descendingSort) invert = -1;
-      if ( a[this.criterium.dataName] === b[this.criterium.dataName] ) return 0;
-      if ( a[this.criterium.dataName] < b[this.criterium.dataName] ) return -1*invert;
-      if ( a[this.criterium.dataName] > b[this.criterium.dataName] ) return 1*invert;      
+      if ( a[this.criterion.dataName] === b[this.criterion.dataName] ) return 0;
+      if ( a[this.criterion.dataName] < b[this.criterion.dataName] ) return -1*invert;
+      if ( a[this.criterion.dataName] > b[this.criterion.dataName] ) return 1*invert;      
     }
 ```
 

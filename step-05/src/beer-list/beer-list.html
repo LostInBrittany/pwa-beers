@@ -19,14 +19,14 @@
         background-color: white;
       }
       .sidebar {
-        min-width: 150px; 
+        min-width: 150px;
         min-height: 50px;
       }
       .sidebar paper-input {
         margin-bottom: 16px;
       }
       .beers {
-        min-width: 400px; 
+        min-width: 400px;
       }
     </style>
 
@@ -34,30 +34,30 @@
       <paper-material class="sidebar">
         <!--Sidebar content-->
         <div>Search: <paper-input value="{{filterText}}"></paper-input></div>
-        <div>Current search:</div> 
+        <div>Current search:</div>
         <div>{{filterText}}</div>
-        <div>  
+        <div>
           Sort by:
-          <paper-dropdown-menu selected-item="{{criterium}}">
+          <paper-dropdown-menu selected-item="{{criterion}}">
             <paper-listbox class="dropdown-content"  selected="0">
               <template is="dom-repeat" items="{{criteria}}">
                 <paper-item data-name="[[item.dataName]]">[[item.label]]</paper-item>
               </template>
-            </paper-listbox> 
+            </paper-listbox>
           </paper-dropdown-menu>
-        </div>             
+        </div>
         <div>
-          <input type="checkbox" checked="{{descendingSort::change}}" name="sortingOrder"> 
+          <input type="checkbox" checked="{{descendingSort::change}}" name="sortingOrder">
           Descending sort
-        </div>   
+        </div>
       </paper-material>
       <div class="beers layout flex" >
         <template id="beerList" is="dom-repeat" items="{{beers}}" filter="beerFilter" sort="beerSorter">
           <beer-list-item name="{{item.name}}" description="{{item.description}}" alcohol="{{item.alcohol}}">
           </beer-list-item>
         </template>
-        <paper-material>Number of beers in list: {{currentBeers}}</paper-material>  
-      </div>        
+        <paper-material>Number of beers in list: {{currentBeers}}</paper-material>
+      </div>
     </div>
   </template>
 
@@ -78,7 +78,7 @@
           observer: "criteriaChanged",
           value: ""
         },
-        criterium: {
+        criterion: {
           type: Object,
           observer: "criteriaChanged"
         },
@@ -90,7 +90,7 @@
           type: Boolean,
           observer: "criteriaChanged",
           value: false
-        },        
+        },
       },
       ready: function() {
         this.criteria = [
@@ -126,12 +126,12 @@
         ];
       },
       criteriaChanged: function(newValue, oldValue) {
-        console.debug(this.criterium)
+        console.debug(this.criterion)
         this.$.beerList.render();
       },
       beerFilter:  function(item) {
         return item.name.match(new RegExp(this.filterText, 'i'));
-      },     
+      },
       getCurrentBeers: function() {
         var current = 0;
         for (var i in this.beers) {
@@ -139,15 +139,16 @@
             current++;
           }
         }
-        return current;        
-      }, 
+        return current;
+      },
       beerSorter: function(a, b) {
+        if (!this.criterion) return 0;
         var invert = 1;
         if (this.descendingSort) invert = -1;
-        if ( a[this.criterium.dataName] === b[this.criterium.dataName] ) return 0;
-        if ( a[this.criterium.dataName] < b[this.criterium.dataName] ) return -1*invert;
-        if ( a[this.criterium.dataName] > b[this.criterium.dataName] ) return 1*invert;      
-      },  
+        if ( a[this.criterion.dataName] === b[this.criterion.dataName] ) return 0;
+        if ( a[this.criterion.dataName] < b[this.criterion.dataName] ) return -1*invert;
+        if ( a[this.criterion.dataName] > b[this.criterion.dataName] ) return 1*invert;
+      },
     });
   </script>
 </dom-module>
