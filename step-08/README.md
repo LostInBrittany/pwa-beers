@@ -115,6 +115,13 @@ Every great mobile app needs its signature launcher icon. Your Web App Manifest 
 }
 ```
 
+### Testing the `manifest.json`
+
+If now you reload the app, you can use Chrome Developer Tools (*Application* tab) to see if the browser can understand it:
+
+[![Screenshot](/img/step-08_01.t.jpg)](/img/step-08_01.jpg)
+
+
 ## Adding a `polymer.json`
 
 This is a file that lives at the top-level of the project and contains the build configuration. We need to add the configuration to the `polymer.json` file to indicate the main entrypoint, the app shell and a few more:
