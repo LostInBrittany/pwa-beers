@@ -25,6 +25,7 @@ Let's begin by adding `iron-flex-layout` and `paper-input` to our `bower.json` a
   "dependencies": {
     "polymer": "Polymer/polymer#^1.4.0",
     "app-route": "PolymerElements/app-route#^0.9.3",
+    "iron-flex-layout": "PolymerElements/iron-flex-layout#^1.3.1",
     "iron-pages": "PolymerElements/iron-pages#^1.0.8",
     "iron-selector": "PolymerElements/iron-selector#^1.5.2",
     "paper-toolbar": "PolymerElements/paper-toolbar#^1.1.7",
@@ -73,7 +74,7 @@ We notify to our element that we want it to use the `iron-flex-layout` shared st
         Search: <paper-input></paper-input>
       </paper-material>
       <div class="beers layout flex" >
-        <template is="dom-repeat" items="{{beers}}">
+        <template is="dom-repeat" id="beerList" items="{{beers}}">
           <beer-list-item name="{{item.name}}" description="{{item.description}}">
           </beer-list-item>
         </template>
@@ -159,7 +160,8 @@ The only problem in our case is that, by default, the filter and sort functions 
       this.$.beerList.render();
     }
   ```
-
+The `this.$.beerList` returns the element inner DOM element with an id `beerList`, i.e. the `dom-repeat` template.
+ 
 And now we have a working filter for our beers!
 
 [![Screenshot](/img/step-04_02.t.jpg)](/img/step-04_02.jpg)
