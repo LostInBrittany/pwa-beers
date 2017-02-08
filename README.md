@@ -26,6 +26,10 @@ The tutorial guides you through the entire process of building a simple applicat
 You can go through the whole tutorial in a couple of hours or you may want to spend a pleasant day really digging into it. If you're looking for a shorter introduction to PWA and or Polymer, check out the official website.
 
 
+
+[![Screenshot](/img/pwa-beers-final-01.t.jpg)](/img/pwa-beers-final-01.jpg)  
+[![Screenshot](/img/pwa-beers-final-02.t.jpg)](/img/pwa-beers-final-02.jpg)  
+
 ## What do I need to use this tutorial?
 
 The tools strictly needed for this tutorial are a modern web browser (ideally [Chrome](https://www.google.com/chrome/) or [Chromium](https://www.chromium.org/)), a text editor (we suggest the excellent [Visual Studio Code](https://code.visualstudio.com/) or [Atom](https://atom.io))), a web server and the [Polymer CLI](https://github.com/Polymer/polymer-cli). If you're unable to install the Polymer CLI (for example your're in  workshop with slow network connection), you will be able to do the tutorial, even if in a slightly degraded mode, as we have committed all the needed resources to this repository.
