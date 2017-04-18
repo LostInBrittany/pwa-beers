@@ -1,0 +1,182 @@
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../../bower_components/paper-material/paper-material.html">
+<link rel="import" href="../beer-internet-warn.html">
+
+<dom-module id="beer-details">
+  <template>
+    <style>
+      .beer {
+        margin: 10px;
+        padding: 16px;
+        min-height: 150px;
+        background-color: white;
+      }
+      .back {
+        width: 50px;
+        height: 50px;
+      }
+      .img {
+        float: left;
+        border: 1px solid black;
+        margin-right: 3em;
+        margin-bottom: 2em;
+        background-color: white;
+        padding: 2em;
+        height: 400px;
+        width: 400px;
+      }
+      .alcohol {
+        clear:both;
+      }
+
+      ul.beer-thumbs {
+        margin: 0;
+        list-style: none;
+      }
+
+      ul.beer-thumbs li {
+        border: 1px solid black;
+        display: inline-block;
+        margin: 1em;
+        background-color: white;
+      }
+
+      ul.beer-thumbs img {
+        height: 100px;
+        width: 100px;
+        padding: 1em;
+      }
+
+      ul.specs {
+        clear: both;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      ul.specs > li{
+        display: inline-block;
+        width: 200px;
+        vertical-align: top;
+      }
+
+      ul.specs > li > span{
+        font-weight: bold;
+        font-size: 1.2em;
+      }
+
+      ul.specs dt {
+        font-weight: bold;
+      }
+
+      h1 {
+        border-bottom: 1px solid gray;
+      }
+    </style>
+
+    <paper-material id="{{beer.id}}" class="beer">
+      <a href="#/list"><img class="pull-right back" src="/img/back.png"></a>
+      <div hidden=[[failure]]>
+        <h1 class="name">{{beer.name}}</h1>
+        <img class="pull-right img" src="{{mainImg}}">
+        <p class="description">{{beer.description}}</p>
+        <ul class="beer-thumbs">
+          <li>
+            <img src="{{beer.img}}" beer="{{beer.img}}" on-click="setImage">
+          </li>
+          <li>
+            <img src="{{beer.label}}" beer="{{beer.label}}" on-click="setImage">
+          </li>
+        </ul>
+        <ul class="specs">
+          <li>
+            <dl>
+              <dt>Alcohol content</dt>
+              <dd>{{beer.alcohol}}%</dd>
+            </dl>
+          </li>
+          <li>
+            <dl>
+              <dt>Brewery</dt>
+              <dd>{{beer.brewery}}</dd>
+            </dl>
+          </li>
+          <li>
+            <dl>
+              <dt>Availability</dt>
+              <dd>{{beer.availability}}</dd>
+            </dl>
+          </li>
+          <li>
+            <dl>
+              <dt>Style</dt>
+              <dd>{{beer.style}}</dd>
+            </dl>
+          </li>
+          <li>
+            <dl>
+              <dt>Serving instructions</dt>
+              <dd>{{beer.serving}}</dd>
+            </dl>
+          </li>
+        </ul>
+      </div>
+    </paper-material>
+    <iron-ajax
+      auto
+      url="{{url}}"
+      method='get'
+      params='{}'
+      handle-as="json"
+      on-response="gotBeers"
+      on-error="_error"
+      debounce-duration="300"></iron-ajax>
+    <beer-internet-warn offline="[[offline]]" hidden="[[!failure]]"></beer-internet-warn>
+  </template>
+  <script>
+    Polymer({
+      is: 'beer-details',
+
+      properties: {
+        id: String,
+        url: {
+          type: String,
+          computed: "getUrl(id)"
+        },
+        offline: {
+          type: Boolean,
+          value: false,
+        },
+        failure: {
+          type: Boolean,
+          value: false,
+        },
+        beer: {
+          type: Object,
+          value: function() {
+            return {};
+          }
+        }
+      },
+      getUrl: function(id) {
+        console.debug("getUrl", id)
+        return "/data/beers/details/" + id + ".json";
+      },
+
+      gotBeers: function(event, ironRequest) {
+        this.failure = false;
+        this.beer = ironRequest.response;
+        console.log("Beer", this.beer)
+        this.set('beer.img', '/data/' + this.beer.img);
+        this.set('beer.label', '/data/' + this.beer.label);
+        this.mainImg = this.beer.img;
+      },
+      setImage: function(evt) {
+        this.mainImg = evt.srcElement.beer;
+      },
+      _error: function(event) {
+        this.failure = true;
+      }
+    })
+  </script>
+</dom-module>

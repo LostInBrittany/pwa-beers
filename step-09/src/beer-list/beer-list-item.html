@@ -1,0 +1,58 @@
+<!-- Import paper-material -->
+<link rel="import" href="../../bower_components/paper-material/paper-material.html">
+
+<dom-module id="beer-list-item">
+  <template>
+    <style>
+      .beer {
+        margin: 10px;
+        padding: 10px;
+        background-color: white;
+        min-height: 50px;
+      }
+      a {
+        text-decoration: none;
+        cursor: pointer;
+        color: #3f51b5;
+      }
+      .alcohol {
+        clear:both;
+      }
+      .img {
+        float: right;
+        width: 100px;
+        max-height: 100px;
+      }
+    </style>
+    <paper-material class="beer">
+      <img class="img" src="/data/beers{{img}}">
+      <a href="{{url}}"><h2 class="name">[[name]]</h2></a>
+      <p class="description">[[description]]</p>
+      <div class="alcohol">[[alcohol]]%</div>
+    </paper-material>
+  </template>
+  <script>
+    Polymer({
+      is: 'beer-list-item',
+
+      properties: {
+        id: String,
+        name: String,
+        description: {
+          type: String,
+          value: ""
+        },
+        img: String,
+        alcohol: Number,
+        url: {
+          type: String,
+          computed: "getUrl(id)"
+        },
+      },
+      getUrl: function(id) {
+        // console.debug("getUrl", id )
+        return "#/details/" + id
+      }
+    })
+  </script>
+</dom-module>

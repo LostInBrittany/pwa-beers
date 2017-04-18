@@ -1,0 +1,134 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<link rel="import" href="../../bower_components/app-route/app-location.html">
+<link rel="import" href="../../bower_components/app-route/app-route.html">
+<link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
+
+<link rel="import" href="../../bower_components/paper-toast/paper-toast.html">
+<link rel="import" href="../../bower_components/paper-toolbar/paper-toolbar.html">
+
+<dom-module id="pwa-app">
+  <template>
+    <style is="custom-style">
+      :host {
+        display: block;
+      }
+      paper-toast {
+        max-width:none;
+      }
+      .yellow-button {
+        text-transform: none;
+        color: #eeff41;
+        margin-left: 20px;
+      }
+    </style>
+
+    <app-location route="{{route}}" use-hash-as-path></app-location>
+    <app-route route="{{route}}" pattern="/:page" data="{{routeData}}" tail="{{subroute}}"></app-route>
+    <app-route route="{{route}}" pattern="/details/:id" data="{{detailsData}}"></app-route>
+
+    <paper-toolbar id="toolbar">
+      <div class="logo"><img src="/img/logo_bw-60px.png"></div>
+      <div class="title">Beer [[page]]</div>
+    </paper-toolbar>
+    <iron-pages selected="[[page]]" attr-for-selected="name" fallback-selection="lost">
+      <div name="list">
+        <beer-list></beer-list>
+      </div>
+      <div name="details">
+        <beer-details id$="[[detailsData.id]]" offline$="[[offline]]"></beer-details>
+      </div>
+      <div name="lost"><h1>It`s seem I'm lost...</h1></div>
+    </iron-pages>
+    <paper-toast id='toast'>
+      <paper-button on-tap="_reload" class="yellow-button" id='toastButton' hidden>Reload</paper-button>
+    </paper-toast>
+  </template>
+
+  <script>
+    Polymer({
+
+      is: 'pwa-app',
+
+      properties: {
+        page: {
+          type: String,
+          reflectToAttribute: true,
+          observer: '_pageChanged'
+        },
+        offline: {
+          type: Boolean,
+          value: function() {
+            console.log('connected ', navigator.onLine);
+            return !navigator.onLine
+          },
+        }
+      },
+
+      observers: [
+        '_routePageChanged(routeData.page)',
+      ],
+
+      listeners: {
+        'notify': '_notifyUser',
+      },
+
+      ready: function() {
+        // listen for online/offline
+        this._notifyNetworkStatus()
+        Polymer.RenderStatus.afterNextRender(this, function() {
+          this.listen(window, 'online', '_notifyNetworkStatus');
+          this.listen(window, 'offline', '_notifyNetworkStatus');
+        });
+      },
+
+      _notifyUser: function(event) {
+        var options = event.detail;
+        this.$.toast.text = options.message;
+        this.$.toast.duration = options.duration == null ? 5000 : options.duration;
+        this.$.toastButton.hidden = false;
+        this.$.toast.open();
+      },
+
+      _reload: function() {
+        window.location.reload();
+      },
+
+      _notifyNetworkStatus: function(event) {
+        var options = (event && event.detail) || {};
+        var oldOffline = this.offline;
+        this.offline = !navigator.onLine;
+        this.$.toolbar.style.background = this.offline ? 'dimgray' : '';
+
+        if (event && (this.offline || (!this.offline && oldOffline === true))) {
+          this.$.toastButton.hidden = true;
+          this.$.toast.text = this.offline ? 'You are offline' : 'You are online';
+          this.$.toast.duration = options.duration == null ? 5000 : options.duration;
+          this.$.toast.open();
+        }
+      },
+
+      // *********************************************************************
+      // Observers
+      // *********************************************************************
+
+      _routePageChanged: function(page) {
+        // console.debug("[pwa-app] _routePageChanged", page);
+        if (!page) {
+          window.history.replaceState({}, null, "#/list");
+          window.dispatchEvent(new CustomEvent('location-changed'));
+          return;
+        }
+        this.page = page;
+      },
+
+      _pageChanged: function(page) {
+        // console.debug("[pwa-beers] _pageChanged", page);
+        // load page import on demand.
+        this.importHref(
+          this.resolveUrl('../beer-' + page + '/beer-' + page + '.html'), null, null, true);
+      },
+
+    });
+  </script>
+</dom-module>

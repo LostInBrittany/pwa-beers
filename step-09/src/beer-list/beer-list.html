@@ -1,0 +1,152 @@
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+
+<link rel="import" href="../../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../../bower_components/paper-listbox/paper-listbox.html">
+<link rel="import" href="../../bower_components/paper-material/paper-material.html">
+
+<!-- Our beer-list will generate `beer-list-item` elements, so we import it -->
+<link rel="import" href="./beer-list-item.html">
+
+<dom-module id="beer-list">
+  <template>
+    <!-- local DOM for your element -->
+    <style include="iron-flex iron-flex-alignment">
+      paper-material {
+        margin: 10px;
+        padding: 10px;
+        background-color: white;
+      }
+      .sidebar {
+        min-width: 150px;
+        min-height: 50px;
+      }
+      .sidebar paper-input {
+        margin-bottom: 16px;
+      }
+      .beers {
+        min-width: 400px;
+      }
+    </style>
+
+
+    <iron-ajax
+      auto
+      url="/data/beers/beers.json"
+      params='{}'
+      handle-as="json"
+      on-response="gotBeers"
+      on-error="gotError"
+      debounce-duration="300"></iron-ajax>
+
+    <div class="layout horizontal wrap start center-justified">
+      <paper-material class="sidebar">
+        <!--Sidebar content-->
+        <div>Search: <paper-input value="{{filterText}}"></paper-input></div>
+        <div>Current search:</div>
+        <div>{{filterText}}</div>
+        <div>
+          Sort by:
+          <paper-dropdown-menu selected-item="{{criterion}}">
+            <paper-listbox class="dropdown-content"  selected="0">
+              <template is="dom-repeat" items="{{criteria}}">
+                <paper-item data-name="[[item.dataName]]">[[item.label]]</paper-item>
+              </template>
+  </paper-listbox>
+  </paper-dropdown-menu>
+  </div>
+  <div>
+    <input type="checkbox" checked="{{descendingSort::change}}" name="sortingOrder"> Descending sort
+  </div>
+  </paper-material>
+  <div class="beers layout flex">
+    <template id="beerList" is="dom-repeat" items="{{beers}}" filter="beerFilter" sort="beerSorter">
+          <beer-list-item
+              id="{{item.id}}"
+              name="{{item.name}}"
+              description="{{item.description}}"
+              img="{{item.img}}"
+              alcohol="{{item.alcohol}}">
+          </beer-list-item>
+        </template>
+    <paper-material>Number of beers in list: {{currentBeers}}</paper-material>
+  </div>
+  </div>
+  </template>
+
+  <script>
+    // element registration
+    Polymer({
+      is: "beer-list",
+      // add properties and methods on the element's prototype
+      properties: {
+        beers: {
+          type: Array,
+          // When initializing a property to an object or array value, use a function to ensure that each element
+          // gets its own copy of the value, rather than having an object or array shared across all instances of the element
+          value: function() {
+            return [];
+          }
+        },
+        filterText: {
+          type: String,
+          observer: "criteriaChanged",
+          value: ""
+        },
+        criterion: {
+          type: Object,
+          observer: "criteriaChanged"
+        },
+        currentBeers: {
+          type: String,
+          computed: "getCurrentBeers(beers, filterText)"
+        },
+        descendingSort: {
+          type: Boolean,
+          observer: "criteriaChanged",
+          value: false
+        },
+      },
+      ready: function() {
+        this.criteria = [{
+            dataName: "name",
+            label: "Alphabetical"
+          },
+          {
+            dataName: "alcohol",
+            label: "Alcohol content"
+          }
+        ];
+      },
+      criteriaChanged: function(newValue, oldValue) {
+        // console.debug(this.criterion)
+        this.$.beerList.render();
+      },
+      beerFilter: function(item) {
+        return item.name.match(new RegExp(this.filterText, 'i'));
+      },
+      getCurrentBeers: function() {
+        var current = 0;
+        for (var i in this.beers) {
+          if (this.beerFilter(this.beers[i])) {
+            current++;
+          }
+        }
+        return current;
+      },
+      beerSorter: function(a, b) {
+        if (!this.criterion) return 0;
+        var invert = 1;
+        if (this.descendingSort) invert = -1;
+        if (a[this.criterion.dataName] === b[this.criterion.dataName]) return 0;
+        if (a[this.criterion.dataName] < b[this.criterion.dataName]) return -1 * invert;
+        if (a[this.criterion.dataName] > b[this.criterion.dataName]) return 1 * invert;
+      },
+      gotBeers: function(event, ironRequest) {
+        this.beers = ironRequest.response;
+      },
+    });
+  </script>
+</dom-module>
