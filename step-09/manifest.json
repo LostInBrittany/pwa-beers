@@ -1,0 +1,29 @@
+{
+  "name": "pwa-beers",
+  "short_name": "pwa-beers",
+  "description": "A tutorial on PWA with Polymer 1.x",
+  "start_url": "./",
+  "display": "standalone",
+  "theme_color": "#9C27B0",
+  "background_color": "#9C27B0",
+  "icons": [{
+     "src": "/img/logo-25px.png",
+     "sizes": "25x25",
+     "type": "image/png"
+   },
+   {
+      "src": "/img/logo-40px.png",
+      "sizes": "40x40",
+      "type": "image/png"
+   },
+   {
+      "src": "/img/logo-250px.png",
+      "sizes": "250x250",
+      "type": "image/png"
+   },
+   {
+      "src": "/img/logo-500px.png",
+      "sizes": "500x500",
+      "type": "image/png"
+   }] 
+}

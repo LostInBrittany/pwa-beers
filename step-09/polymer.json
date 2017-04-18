@@ -1,0 +1,33 @@
+{
+  "entrypoint": "index.html",
+  "shell": "src/pwa-app/pwa-app.html",
+  "fragments": [
+    "src/beer-list/beer-list.html",
+    "src/beer-details/beer-details.html"
+  ],
+  "sourceGlobs": [
+    "data/**/*",
+    "img/**/*",
+    "bower_components/font-roboto/fonts/**"
+  ],
+  "includeDependencies": [
+    "manifest.json",
+    "bower_components/webcomponentsjs/webcomponents-lite.js"
+  ],
+  "builds": [{
+    "name": "bundled",
+    "bundle": true,
+    "addServiceWorker": true,
+    "insertPrefetchLinks": true,
+    "js": {"minify": true},
+    "css": {"minify": true},
+    "html": {"minify": true}
+  },{
+    "name": "unbundled",
+    "addServiceWorker": true,
+    "insertPrefetchLinks": true,
+    "js": {"minify": true},
+    "css": {"minify": true},
+    "html": {"minify": true}
+  }]
+}
