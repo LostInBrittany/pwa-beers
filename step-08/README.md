@@ -155,11 +155,12 @@ This is a file that lives at the top-level of the project and contains the build
   "sourceGlobs": [
     "data/**/*",
     "img/**/*",
-    "bower_components/font-roboto/fonts/**"
+    "bower_components/font-roboto/fonts/**",
+    "bower.json"
   ],
   "includeDependencies": [
     "manifest.json",
-    "bower_components/webcomponentsjs/webcomponents-lite.min.js"
+    "bower_components/webcomponentsjs/webcomponents-lite.js"
   ]
 }
 ```
@@ -187,7 +188,7 @@ module.exports = {
   staticFileGlobs: [
     '/index.html',
     '/manifest.json',
-    '/bower_components/webcomponentsjs/webcomponents-lite.min.js'
+    '/bower_components/webcomponentsjs/webcomponents-lite.js'
   ],
   navigateFallback: 'index.html',
   navigateFallbackWhitelist: [/^(?!.*\.html$|\/data\/).*/],
@@ -255,6 +256,15 @@ _pageChanged: function(page) {
 ```
 
 ## Using the CLI
+
+As we will serve the application from the 'step-08' folder, you will have to create some symlinks.
+
+```
+cd step-08
+ln -sfn ../bower_components/ .
+ln -sfn ../data/ .
+ln -sfn ../img/ .
+```
 
 Now, we are ready to build the app by running the following command:
 
