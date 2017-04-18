@@ -9,7 +9,7 @@ module.exports = {
   navigateFallbackWhitelist: [/^(?!.*\.html$|\/data\/).*/],
   runtimeCaching: [
     {
-      urlPattern: /\/data\/\/img\/.*/,
+      urlPattern: /\/data\/beers\/img\/.*/,
       handler: 'cacheFirst',
       options: {
         cache: {

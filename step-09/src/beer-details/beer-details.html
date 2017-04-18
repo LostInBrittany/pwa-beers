@@ -161,16 +161,15 @@
       },
       getUrl: function(id) {
         console.debug("getUrl", id)
-        // if (this.offline) id += "-offline"
-        return "../../data/beers/details/" + id + ".json";
+        return "/data/beers/details/" + id + ".json";
       },
 
       gotBeers: function(event, ironRequest) {
         this.failure = false;
         this.beer = ironRequest.response;
         console.log("Beer", this.beer)
-        this.set('beer.img', '../../data/' + this.beer.img);
-        this.set('beer.label', '../../data/' + this.beer.label);
+        this.set('beer.img', '/data/' + this.beer.img);
+        this.set('beer.label', '/data/' + this.beer.label);
         this.mainImg = this.beer.img;
       },
       setImage: function(evt) {
@@ -178,9 +177,6 @@
       },
       _error: function(event) {
         this.failure = true;
-        this.mainImg = '/img/offline.png';
-        this.set('beer.img', '/img/offline.png');
-        this.set('beer.label', '/img/offline.png');
       }
     })
   </script>
