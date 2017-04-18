@@ -77,50 +77,49 @@
     <paper-material id="{{beer.id}}" class="beer">
       <a href="#/list"><img class="pull-right back" src="/img/back.png"></a>
       <div hidden=[[failure]]>
-      <h1 class="name">{{beer.name}}</h1>
-      <img class="pull-right img" src="{{mainImg}}">
-      <p class="description">{{beer.description}}</p>
-
-      <ul class="beer-thumbs">
-        <li>
-          <img src="{{beer.img}}" beer="{{beer.img}}" on-click="setImage">
-        </li>
-        <li>
-          <img src="{{beer.label}}" beer="{{beer.label}}" on-click="setImage">
-        </li>
-      </ul>
-      <ul class="specs">
-        <li>
-          <dl>
-            <dt>Alcohol content</dt>
-            <dd>{{beer.alcohol}}%</dd>
-          </dl>
-        </li>
-        <li>
-          <dl>
-            <dt>Brewery</dt>
-            <dd>{{beer.brewery}}</dd>
-          </dl>
-        </li>
-        <li>
-          <dl>
-            <dt>Availability</dt>
-            <dd>{{beer.availability}}</dd>
-          </dl>
-        </li>
-        <li>
-          <dl>
-            <dt>Style</dt>
-            <dd>{{beer.style}}</dd>
-          </dl>
-        </li>
-        <li>
-          <dl>
-            <dt>Serving instructions</dt>
-            <dd>{{beer.serving}}</dd>
-          </dl>
-        </li>
-      </ul>
+        <h1 class="name">{{beer.name}}</h1>
+        <img class="pull-right img" src="{{mainImg}}">
+        <p class="description">{{beer.description}}</p>
+        <ul class="beer-thumbs">
+          <li>
+            <img src="{{beer.img}}" beer="{{beer.img}}" on-click="setImage">
+          </li>
+          <li>
+            <img src="{{beer.label}}" beer="{{beer.label}}" on-click="setImage">
+          </li>
+        </ul>
+        <ul class="specs">
+          <li>
+            <dl>
+              <dt>Alcohol content</dt>
+              <dd>{{beer.alcohol}}%</dd>
+            </dl>
+          </li>
+          <li>
+            <dl>
+              <dt>Brewery</dt>
+              <dd>{{beer.brewery}}</dd>
+            </dl>
+          </li>
+          <li>
+            <dl>
+              <dt>Availability</dt>
+              <dd>{{beer.availability}}</dd>
+            </dl>
+          </li>
+          <li>
+            <dl>
+              <dt>Style</dt>
+              <dd>{{beer.style}}</dd>
+            </dl>
+          </li>
+          <li>
+            <dl>
+              <dt>Serving instructions</dt>
+              <dd>{{beer.serving}}</dd>
+            </dl>
+          </li>
+        </ul>
       </div>
     </paper-material>
     <iron-ajax
