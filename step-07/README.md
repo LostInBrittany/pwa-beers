@@ -185,3 +185,7 @@ And then we use this property in the hyperlink element:
 ```
 
 [![Screenshot](../img/step-07_01.t.jpg)](../img/step-07_01.jpg)  
+
+## Next
+
+Now that you have a nice details page for our beers, go to [step 8](../step-08) to learn how to put the P into PWA.
