@@ -14,6 +14,8 @@ We begin by creating a new file for the element, `./src/beer-lists/beer-list.htm
 ```html
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 
+<link rel="import" href="../beer-list/beer-list-item.html">
+
 <dom-module id="beer-list">
   <template>
     <style>
