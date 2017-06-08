@@ -105,7 +105,7 @@ As the computers used for the courses haven't Git, we have structured the projec
 - [Step 02 - Creating a new element](./step-02/)
 - [Step 03 - A list of Beers](./step-03/)
 - [Step 04 - Adding full text search](./step-04/)
-- [Step 05 - Sorting the list](./ste-05/)
+- [Step 05 - Sorting the list](./step-05/)
 - [Step 06 - Doing some AJAX](./step-06/)
 - [Step 07 - Beer details](./step-07/)
 - [Step 08 - Putting the *P* into PWA](./step-08/)
