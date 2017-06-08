@@ -22,7 +22,7 @@ The *iron-ajax* calls the file according to the beer id.
 ```html
 <link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
 
-<link rel="import" href="/bower_components/paper-material/paper-material.html">
+<link rel="import" href="../../bower_components/paper-material/paper-material.html">
 
 <dom-module id="beer-details">
   <template>
@@ -31,7 +31,7 @@ The *iron-ajax* calls the file according to the beer id.
     </style>
 
     <paper-material id="{{beer.id}}" class="beer">
-      <a href="#/beers"><img class="pull-right back" src="../img/back.png"></a>
+      <a href="#/list"><img class="pull-right back" src="../img/back.png"></a>
       <h1 class="name">{{beer.name}}</h1>
       <img class="pull-right img" src="../../data/{{mainImg}}">
       <p class="description">{{beer.description}}</p>
