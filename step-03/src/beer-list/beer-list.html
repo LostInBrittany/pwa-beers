@@ -1,54 +1,48 @@
-<!-- Our beer-list will generate `beer-list-item` elements, so we import it -->
-<link rel="import" href="./beer-list-item.html">
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+
+<link rel="import" href="../beer-list/beer-list-item.html">
 
 <dom-module id="beer-list">
   <template>
-    <!-- local DOM for your element -->
     <style>
-      .cell {
-        padding: 5px;
-        border: 1px black solid;
+      :host {
+        display: block;
       }
     </style>
     <div class="beers">
-      <template is="dom-repeat" items="{{beers}}">
-        <beer-list-item name="{{item.name}}" description="{{item.description}}">
-        </beer-list-item>
-      </template>
+      <dom-repeat items="{{beers}}">
+        <template>
+          <beer-list-item name="{{item.name}}" description="{{item.description}}">
+          </beer-list-item>
+        </template>
+      </dom-repeat>
     </div>
-    
-    <div>Number of beers in list: {{beers.length}}</div>    
 
-    <table>
-      <tr><th colspan='8'>Row number</th></tr>
-      <template
-        is="dom-repeat" items="[0, 1, 2, 3, 4, 5, 6, 7]" as="lines">
-        <tr>
-        <template
-          is="dom-repeat"
-          items='["a","b","c","d","e","f"]' as="columns">
-            <td class="cell">{{lines}} - {{columns}}</td>
-          </template>
-        </tr>
-      </template>
-    </table>
-    
+    <div>Number of beers in list: {{beers.length}}</div>
   </template>
 
   <script>
-    // element registration
-    Polymer({
-      is: "beer-list",
-      // add properties and methods on the element's prototype
-      properties: {
-        beers: {
-          type: Array,
-          // When initializing a property to an object or array value, use a function to ensure that each element
-          // gets its own copy of the value, rather than having an object or array shared across all instances of the element
-          value: function() { return []; }
+    /**
+     * @customElement
+     * @polymer
+     */
+    class BeerList extends Polymer.Element {
+      static get is() { 
+        return 'beer-list'; 
+      }
+
+      static get properties() {
+        return {
+          beers: {
+            type: Array,
+            // When initializing a property to an object or array value, use a function to ensure that each element
+            // gets its own copy of the value, rather than having an object or array shared across all instances of the element
+            value: function() { return []; }
+          }
         }
-      },
-      ready: function() {
+      }   
+
+      connectedCallback() {
         this.beers = [
           {
             alcohol: 8.5,
@@ -66,7 +60,9 @@
             description: "This Trappist beer possesses a beautiful coppery colour that makes it particularly attractive. Topped with a creamy head, it gives off a slight fruity apricot smell from the fermentation. The aroma felt in the mouth is a balance confirming the fruit nuances revealed to the sense of smell. This traditional Belgian beer is best savoured at cellar temperature "
           }
         ];
-      }
-    });
+      }   
+    }
+
+    window.customElements.define(BeerList.is, BeerList);
   </script>
 </dom-module>

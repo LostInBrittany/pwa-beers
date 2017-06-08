@@ -1,17 +1,21 @@
 {
   "entrypoint": "index.html",
-  "shell": "src/pwa-app/pwa-app.html",
+  "shell": "src/pwa-beers-app/pwa-beers-app.html",
   "fragments": [
     "src/beer-list/beer-list.html",
     "src/beer-details/beer-details.html"
   ],
-  "sourceGlobs": [
+  "sources": [
     "data/**/*",
     "img/**/*",
     "bower_components/font-roboto/fonts/**"
   ],
-  "includeDependencies": [
+  "extraDependencies": [
     "manifest.json",
     "bower_components/webcomponentsjs/webcomponents-lite.min.js"
-  ]
+  ],
+  "lint": {
+    "rules": ["polymer-2"]
+  }
+
 }

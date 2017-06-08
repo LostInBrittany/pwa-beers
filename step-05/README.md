@@ -1,4 +1,4 @@
-# ![](/img/logo-25px.png) PWA Beers - Step 05 - Sorting the list
+# ![](../img/logo-25px.png) PWA Beers - Step 05 - Sorting the list
 
 > This is an optional step, that helps you dive deeper into Polymer. If your main interest in *PWA Beers* is the PWA aspect, you can simply copy the content of the `step-05` folder into your working folder `app`.
 
@@ -47,16 +47,18 @@ this.beers = [
 We add a `sort` attribute to the `dom-repeat` repeater, in a similar way as we did with filter, to declare a sorting function
 
 ```html
-  <template id="beerList" is="dom-repeat" items="{{beers}}" filter="beerFilter" sort="beerSorter">
-    <beer-list-item name="{{item.name}}" description="{{item.description}}" >
+<dom-repeat  id="beerList" items="{{beers}}"  filter="[[computeBeerFilter(filterText)]]" sort="beerSorter">
+  <template>
+    <beer-list-item name="{{item.name}}" description="{{item.description}}">
     </beer-list-item>
   </template>
+</dom-repeat>
 ```
 
 And we define our sorting function:
 
 ```javascript
-  beerSorter: function(a, b) {
+  beerSorter(a, b) {
     if (a.alcohol === b.alcohol) return 0;
     return b.alcohol - a.alcohol;
   }
@@ -67,30 +69,33 @@ So now we have our beers ordered by alcohol content. But let's do a more flexibl
 
 ## Selecting order criteria
 
-First we add the [`paper-dropdown-menu`](https://elements.polymer-project.org/elements/paper-dropdown-menu), [`paper-listbox`](https://elements.polymer-project.org/elements/paper-listbox) and [`paper-item`](https://elements.polymer-project.org/elements/paper-item) element to do a nice Material Design dropdown menu.
+First we add the [`paper-dropdown-menu`](https://www.webcomponents.org/element/PolymerElements/paper-dropdown-menu), [`paper-listbox`](https://www.webcomponents.org/element/polymerelements/paper-listbox) and [`paper-item`](https://www.webcomponents.org/element/PolymerElements/paper-item) element to do a nice Material Design dropdown menu.
+
+```
+bower install --save PolymerElements/paper-dropdown-menu PolymerElements/paper-listbox PolymerElements/paper-item
+```
 
 ```json
 {
   "name": "pwa-beers",
-  "description": "A tutorial on PWA with Polymer 1.x",
+  "description": "PWA Beers with Polymer 2.x",
   "main": "index.html",
   "dependencies": {
-    "polymer": "Polymer/polymer#^1.4.0",
-    "app-route": "PolymerElements/app-route#^0.9.3",
-    "iron-pages": "PolymerElements/iron-pages#^1.0.8",
-    "iron-selector": "PolymerElements/iron-selector#^1.5.2",
-    "paper-toolbar": "PolymerElements/paper-toolbar#^1.1.7",
-    "paper-material": "PolymerElements/paper-material#^1.0.6",
-    "paper-input": "PolymerElements/paper-input#^1.1.23",
-    "paper-dropdown-menu": "PolymerElements/paper-dropdown-menu#^1.5.0",
-    "paper-listbox": "PolymerElements/paper-listbox#^1.1.2",
-    "paper-item": "PolymerElements/paper-item#^1.2.1"
+    "polymer": "Polymer/polymer#^2.0.0",
+    "app-route": "PolymerElements/app-route#^2.0.0",
+    "iron-pages": "PolymerElements/iron-pages#^2.0.0",
+    "iron-selector": "PolymerElements/iron-selector#^2.0.0",
+    "paper-toolbar": "PolymerElements/paper-toolbar#^2.0.0",
+    "paper-material": "PolymerElements/paper-material#^2.0.0",
+    "iron-flex-layout": "PolymerElements/iron-flex-layout#^2.0.0",
+    "paper-input": "PolymerElements/paper-input#^2.0.0",
+    "paper-dropdown-menu": "PolymerElements/paper-dropdown-menu#^2.0.0",
+    "paper-listbox": "PolymerElements/paper-listbox#^2.0.0",
+    "paper-item": "PolymerElements/paper-item#^2.0.0"
   },
   "devDependencies": {
-    "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
-    "iron-demo-helpers": "PolymerElements/iron-demo-helpers#^1.0.0",
-    "web-component-tester": "^4.0.0",
-    "webcomponentsjs": "webcomponents/webcomponentsjs#^0.7.0"
+    "web-component-tester": "Polymer/web-component-tester#^6.0.0",
+    "webcomponentsjs": "webcomponents/webcomponentsjs#^1.0.0"
   }
 }
 ```
@@ -106,10 +111,12 @@ We import `paper-dropdown-menu.html` in our `beer-list` element, and we add a `p
   <div>  
     Sort by:
     <paper-dropdown-menu selected-item="{{criterion}}">
-      <paper-listbox class="dropdown-content" selected="0">
-        <template is="dom-repeat" items="{{criteria}}">
-          <paper-item data-name="[[item.dataName]]">[[item.label]]</paper-item>
-        </template>
+      <paper-listbox slot="dropdown-content" selected="0">
+        <dom-repeat items="{{criteria}}">
+          <template>
+            <paper-item data-name="[[item.dataName]]">[[item.label]]</paper-item>
+          </template>
+        </dom-repeat>
       </paper-listbox>
     </paper-dropdown-menu>
   </div>        
@@ -117,49 +124,46 @@ We import `paper-dropdown-menu.html` in our `beer-list` element, and we add a `p
 ```
 
 ```javascript
-  this.criteria = [
-    { dataName: "name", label: "Alphabetical"},
-    { dataName: "alcohol", label: "Alcohol content" }
-  ];
+criteria: {
+  type: Array,
+  value: function() { 
+    return [
+      { dataName: "name", label: "Alphabetical"},
+      { dataName: "alcohol", label: "Alcohol content" }
+    ];
+  }
+}
 ```
 
-Then we modify the sort function to sort according to the chosen property:
+Then we modify the sort function to make it dynamic, in a similar way we did in last step for the filter:
+
+```html
+<dom-repeat  id="beerList" items="{{beers}}"  filter="[[computeBeerFilter(filterText)]]" sort="[[computeBeerSorter(criterion)]]">
+  <template>
+    <beer-list-item name="{{item.name}}" description="{{item.description}}">
+    </beer-list-item>
+  </template>
+</dom-repeat>
+```
 
 ```javascript
-  beerSorter: function(a, b) {  
-    if (!this.criterion) return 0;
-    if ( a[this.criterion.dataName] === b[this.criterion.dataName] ) return 0;
-    if ( a[this.criterion.dataName] < b[this.criterion.dataName] ) return -1;
-    if ( a[this.criterion.dataName] > b[this.criterion.dataName] ) return 1;      
+computeBeerSorter(criterion) {
+  console.log('computeBeerSorter')
+  return function(a,b){
+    if (!criterion) return 0;
+    if ( a[criterion.dataName] === b[criterion.dataName] ) return 0;
+    if ( a[criterion.dataName] < b[criterion.dataName] ) return -1;
+    if ( a[criterion.dataName] > b[criterion.dataName] ) return 1; 
   }
+}
 ```
 
-
-And, as in last step, we add an observer to `criterion` to make it run a new sort when it changes:
-
-```javascript
-  properties: {
-    filterText: {
-      type: String,
-      observer: "criteriaChanged"
-    },
-    criterion: {
-      type: Object,
-      observer: "criteriaChanged"
-    }
-  },
-  criteriaChanged: function(newValue, oldValue) {
-    this.$.beerList.render();
-  }
-```
-
-``
 
 ## Ascending or descending
 
 By default our sorter sorts in ascending order. Let's add a checkbox to give us descending sort capabilities.
 
-We could use an specific paper element, like [`paper-checkbox`](https://elements.polymer-project.org/elements/paper-checkbox), but we are going to use a simple HTML input, to see how to do it. We need to link the `descendingSort` input field to a property of the object. In the template we use checked to link the `change` event of the `input` item to the `descendingSort` property:
+We could use an specific paper element, like [`paper-checkbox`](https://www.webcomponents.org/element/PolymerElements/paper-checkbox), but we are going to use a simple HTML input, to see how to do it. We need to link the `descendingSort` input field to a property of the object. In the template we use checked to link the `change` event of the `input` item to the `descendingSort` property:
 
 ```html
   <paper-material class="sidebar">
@@ -187,26 +191,39 @@ We could use an specific paper element, like [`paper-checkbox`](https://elements
 ```javascript
   descendingSort: {
     type: Boolean,
-    observer: "criteriaChanged",
     value: false
   }
+```
+
+We modify the template repeater to make sorting also dependant of `descendingSort`:
+
+```
+<dom-repeat  id="beerList" items="{{beers}}"  filter="[[computeBeerFilter(filterText)]]" sort="[[computeBeerSorter(criterion, descendingSort)]]">
+  <template>
+    <beer-list-item name="{{item.name}}" description="{{item.description}}">
+    </beer-list-item>
+  </template>
+</dom-repeat>
 ```
 
 And then we modify the sort to inverse the order if the `descendingSort` property is true:
 
 ```javascript
-    beerSorter: function(a, b) {      
-      if (!this.criterion) return 0;
-      var invert = 1;
-      if (this.descendingSort) invert = -1;
-      if ( a[this.criterion.dataName] === b[this.criterion.dataName] ) return 0;
-      if ( a[this.criterion.dataName] < b[this.criterion.dataName] ) return -1*invert;
-      if ( a[this.criterion.dataName] > b[this.criterion.dataName] ) return 1*invert;      
-    }
+computeBeerSorter(criterion, descendingSort) {
+  console.log('computeBeerSorter')
+  return function(a,b){
+    if (!criterion) return 0;
+    var invert = 1;
+    if (descendingSort) invert = -1;
+    if ( a[criterion.dataName] === b[criterion.dataName] ) return 0;
+    if ( a[criterion.dataName] < b[criterion.dataName] ) return -1*invert;
+    if ( a[criterion.dataName] > b[criterion.dataName] ) return 1*invert; 
+  }
+}
 ```
 
-[![Screenshot](/img/step-05_01.t.jpg)](/img/step-05_01.jpg)
+[![Screenshot](../img/step-05_01.t.jpg)](../img/step-05_01.jpg)
 
 ## Next
 
-Now that you have added list sorting, go to [step 6](../step-06) to learn how to dynamically load our beer data from a server-side JSON file.
+Now that you have added list sorting, go to [step 06](../step-06) to learn how to dynamically load our beer data from a server-side JSON file.

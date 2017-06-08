@@ -1,11 +1,15 @@
-<!-- Import Polymer library -->
-<link rel="import" href="/bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+
 <!-- Import paper-material -->
-<link rel="import" href="/bower_components/paper-material/paper-material.html">
+<link rel="import" href="../../bower_components/paper-material/paper-material.html">
+
 
 <dom-module id="beer-list-item">
   <template>
     <style>
+      :host {
+        display: block;
+      }
       .beer {
         margin: 10px;
         padding: 10px;
@@ -18,17 +22,31 @@
       <p>{{description}}</p>
     </paper-material>
   </template>
-  <script>
-    Polymer({
-      is: 'beer-list-item',
 
-      properties: {
-        name: String,
-        description: {
-          type: String,
-          value: ""
-        }
+  <script>
+    /**
+     * @customElement
+     * @polymer
+     */
+    class BeerListItem extends Polymer.Element {
+      static get is() { 
+        return 'beer-list-item'; 
       }
-    })
+
+      static get properties() {
+        return {
+          name: {
+            type: String,
+            value: ""
+          },
+          description: {
+            type: String,
+            value: ""
+          }
+        }
+      }      
+    }
+
+    window.customElements.define(BeerListItem.is, BeerListItem);
   </script>
 </dom-module>

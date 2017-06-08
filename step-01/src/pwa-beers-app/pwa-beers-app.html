@@ -1,0 +1,68 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+
+<link rel="import" href="../../bower_components/app-route/app-location.html">
+<link rel="import" href="../../bower_components/app-route/app-route.html">
+
+<link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
+
+<dom-module id="pwa-beers-app">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+
+    <app-location route="{{route}}" use-hash-as-path></app-location>
+    <app-route route="{{route}}" pattern="/:page" data="{{routeData}}" tail="{{subroute}}"></app-route>
+
+
+    <iron-pages selected="[[page]]" attr-for-selected="name" fallback-selection="lost">
+      <div name="list"><h1>Beer list</h1></div>
+      <div name="details"><h1>Beer details</h1></div>
+      <div name="lost"><h1>It`s seem I'm lost...</h1></div>
+    </iron-pages>
+
+
+    <h2>Current page: [[routeData.page]]</h2>
+  </template>
+
+  <script>
+    /**
+     * @customElement
+     * @polymer
+     */
+    class PwaBeersApp extends Polymer.Element {
+
+      static get is() { 
+        return 'pwa-beers-app'; 
+      }
+
+      static get properties() {
+        return {
+          page: {
+            type: String,
+          }
+        };
+      }
+
+      static get observers() {
+        return [
+          '_routePageChanged(routeData.page)'
+        ]
+      }
+
+      _routePageChanged(page) {
+        console.log('[pwa-beers-app] _routePageChanged', page);
+        if (!page) {
+          window.history.replaceState({}, null, "#/list");
+          window.dispatchEvent(new CustomEvent('location-changed'));
+          return;
+        }
+        this.page = page;
+      }
+    }
+
+    window.customElements.define(PwaBeersApp.is, PwaBeersApp);
+  </script>
+</dom-module>

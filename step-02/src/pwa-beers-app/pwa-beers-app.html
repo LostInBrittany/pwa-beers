@@ -1,0 +1,86 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+
+<link rel="import" href="../../bower_components/app-route/app-location.html">
+<link rel="import" href="../../bower_components/app-route/app-route.html">
+
+<link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
+
+<link rel="import" href="../../bower_components/paper-toolbar/paper-toolbar.html">
+
+<!-- Import `beer-list-item` element -->
+<link rel="import" href="../beer-list/beer-list-item.html">
+
+<dom-module id="pwa-beers-app">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+
+    <app-location route="{{route}}" use-hash-as-path></app-location>
+    <app-route route="{{route}}" pattern="/:page" data="{{routeData}}" tail="{{subroute}}"></app-route>
+
+
+
+    <iron-pages selected="[[page]]" attr-for-selected="name" fallback-selection="lost">
+      <div name="list">
+        <paper-toolbar>
+          <div class="logo" slot="top"><img src="/img/logo_bw-60px.png"></div>
+          <div class="title" slot="top">Beer list</div>
+        </paper-toolbar>
+
+        <beer-list-item
+          name="Affligem Blond"
+          description="Affligem Blonde, the classic clear blonde abbey ale, with a gentle roundness and 6.8%..."
+        ></beer-list-item>
+        <beer-list-item
+          name="Affligem Tripel"
+          description="The king of the abbey beers. It is amber-gold and pours with a deep head and original..."
+        ></beer-list-item>
+      </div>
+      <div name="details"><h1>Beer details</h1></div>
+      <div name="lost"><h1>It`s seem I'm lost...</h1></div>
+    </iron-pages>
+
+  </template>
+
+  <script>
+    /**
+     * @customElement
+     * @polymer
+     */
+    class PwaBeersApp extends Polymer.Element {
+
+      static get is() { 
+        return 'pwa-beers-app'; 
+      }
+
+      static get properties() {
+        return {
+          page: {
+            type: String,
+          }
+        };
+      }
+
+      static get observers() {
+        return [
+          '_routePageChanged(routeData.page)'
+        ]
+      }
+
+      _routePageChanged(page) {
+        console.log('[pwa-beers-app] _routePageChanged', page);
+        if (!page) {
+          window.history.replaceState({}, null, "#/list");
+          window.dispatchEvent(new CustomEvent('location-changed'));
+          return;
+        }
+        this.page = page;
+      }
+    }
+
+    window.customElements.define(PwaBeersApp.is, PwaBeersApp);
+  </script>
+</dom-module>

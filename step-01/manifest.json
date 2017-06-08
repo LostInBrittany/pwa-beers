@@ -1,7 +1,7 @@
 {
   "name": "pwa-beers",
   "short_name": "pwa-beers",
-  "description": "A tutorial on PWA with Polymer 1.x",
+  "description": "PWA Beers with Polymer 2.x",
   "start_url": "/",
   "display": "standalone"
 }

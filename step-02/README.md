@@ -1,41 +1,44 @@
-# ![](/img/logo-25px.png) PWA Beers - Step 02 - Beer list element
+# ![](../img/logo-25px.png) PWA Beers - Step 02 - Beer list element
 
 In this step we are going to use our first Polymer element, a very simple custom `beer-list-item`.
 By using it you will see how easily you can add Polymer widgets to your normal web applications.
 
 ## Material design
 
-We are going to give a [Material Design](https://material.io/guidelines/) look to our application, by using some of the Polymer [Paper Elements](https://elements.polymer-project.org/browse?package=paper-elements). We will be using [`paper-toolbar`](https://elements.polymer-project.org/elements/paper-toolbar) to add a main toolbar to the application, and [`paper-material`](https://elements.polymer-project.org/elements/paper-material) to add a paper card for each beer.
+We are going to give a [Material Design](https://material.io/guidelines/) look to our application, by using some of the Polymer [Paper Elements](https://www.webcomponents.org/collection/PolymerElements/paper-elements). We will be using [`paper-toolbar`](https://www.webcomponents.org/element/PolymerElements/paper-toolbar) to add a main toolbar to the application, and [`paper-material`](https://www.webcomponents.org/element/PolymerElements/paper-material) to add a paper card for each beer.
 
 We begin by adding `paper-toolbar` and `paper-material` to our dependencies:
 
-On `bower.json`:
+```
+bower install --save PolymerElements/paper-toolbar PolymerElements/paper-material
+```
+
+On `bower.json` we get:
+
 ```json
 {
   "name": "pwa-beers",
-  "description": "A tutorial on PWA with Polymer 1.x",
+  "description": "PWA Beers with Polymer 2.x",
   "main": "index.html",
   "dependencies": {
-    "polymer": "Polymer/polymer#^1.4.0",
-    "app-route": "PolymerElements/app-route#^0.9.3",
-    "iron-pages": "PolymerElements/iron-pages#^1.0.8",
-    "iron-selector": "PolymerElements/iron-selector#^1.5.2",
-    "paper-toolbar": "PolymerElements/paper-toolbar#^1.1.7",
-    "paper-material": "PolymerElements/paper-material#^1.0.6"
+    "polymer": "Polymer/polymer#^2.0.0",
+    "app-route": "PolymerElements/app-route#^2.0.0",
+    "iron-pages": "PolymerElements/iron-pages#^2.0.0",
+    "iron-selector": "PolymerElements/iron-selector#^2.0.0",
+    "paper-toolbar": "PolymerElements/paper-toolbar#^2.0.0",
+    "paper-material": "PolymerElements/paper-material#^2.0.0"
   },
   "devDependencies": {
-    "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
-    "iron-demo-helpers": "PolymerElements/iron-demo-helpers#^1.0.0",
-    "web-component-tester": "^4.0.0",
-    "webcomponentsjs": "webcomponents/webcomponentsjs#^0.7.0"
+    "web-component-tester": "Polymer/web-component-tester#^6.0.0",
+    "webcomponentsjs": "webcomponents/webcomponentsjs#^1.0.0"
   }
 }
 ```
 
-And in `./src/pwa-app/pwa-app.html` we import `paper-toolbar` :
+And in `./src/pwa-beers-app/pwa-beers-app.html` we import `paper-toolbar` :
 
 ```HTML
-<link rel="import" href="/bower_components/paper-toolbar/paper-toolbar.html">
+<link rel="import" href="../../bower_components/paper-toolbar/paper-toolbar.html">
 ```
 
 and then we replace the `h1` tags inside `iron-pages` by a `paper-toolbar`:
@@ -44,15 +47,14 @@ and then we replace the `h1` tags inside `iron-pages` by a `paper-toolbar`:
 <iron-pages selected="[[page]]" attr-for-selected="name" fallback-selection="lost">
   <div name="list">
     <paper-toolbar>
-      <div class="logo"><img src="/img/logo_bw-60px.png"></div>
-      <div class="title">Beer list</div>
+      <div class="logo" slot="top"><img src="/img/logo_bw-60px.png"></div>
+      <div class="title" slot="top">Beer list</div>
     </paper-toolbar>
   </div>
   <div name="details"><h1>Beer details</h1></div>
   <div name="lost"><h1>It`s seem I'm lost...</h1></div>
+</iron-pages>
 ```
-
-
 
 
 ## The custom element
@@ -71,15 +73,18 @@ Our custom element is very simple at this step:
 
 
 ```html
-<!-- Import Polymer library -->
-<link rel="import" href="/bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+
 <!-- Import paper-material -->
-<link rel="import" href="/bower_components/paper-material/paper-material.html">
+<link rel="import" href="../../bower_components/paper-material/paper-material.html">
 
 
 <dom-module id="beer-list-item">
   <template>
     <style>
+      :host {
+        display: block;
+      }
       .beer {
         margin: 10px;
         padding: 10px;
@@ -92,18 +97,33 @@ Our custom element is very simple at this step:
       <p>{{description}}</p>
     </paper-material>
   </template>
-  <script>
-    Polymer({
-      is: 'beer-list-item',
 
-      properties: {
-        name: String,
-        description: {
-          type: String,
-          value: ""
-        }
+  <script>
+    /**
+     * @customElement
+     * @polymer
+     */
+    class BeerListItem extends Polymer.Element {
+      static get is() { 
+        return 'beer-list-item'; 
       }
-    })
+
+      static get properties() {
+        return {
+          name: {
+            type: String,
+            value: ""
+          },
+          description: {
+            type: String,
+            value: ""
+          }
+        }
+      }      
+    }
+
+
+    window.customElements.define(BeerListItem.is, BeerListItem);
   </script>
 </dom-module>
 ```
@@ -128,7 +148,7 @@ As we have seem in the precedent step, using Polymer elements inside other eleme
 
 ## What must I do?
 
-Inside the `iron-pages` section of `src/pwa-app/pwa-app.html` you're going to expand the `main` case by
+Inside the `iron-pages` section of `src/pwa-beer-app/pwa-beer-app.html` you're going to expand the `main` case by
 adding two `beer-list-items` elements:
 
 ```html
@@ -141,7 +161,7 @@ adding two `beer-list-items` elements:
   description="The king of the abbey beers. It is amber-gold and pours with a deep head and original..."
 ></beer-list-item>
 ```
-In order to do it, don't forget you need to import the `beer-list-item` element in the header section of `src/pwa-app/pwa-app.html`.
+In order to do it, don't forget you need to import the `beer-list-item` element in the header section of `src/pwa-beer-app/pwa-beer-app.html`.
 
 [![Screenshot](../img/step-02_01.t.jpg)](../img/step-02_01.jpg)
 
@@ -180,7 +200,7 @@ To bind to a child property, specify the attribute name that corresponds to the 
 
 Here we are defining an instance of `beer-list-item`  component binding the component `name` property to `"Affligem Tripel"` and the `description` to `"The king of the abbey beers. It is amber-gold and pours with a deep head and original..."`.
 
-For more information about data binding, see the [Polymer documentation](https://www.polymer-project.org/1.0/docs/devguide/data-binding.html)
+For more information about data binding, see the [Polymer documentation](https://www.polymer-project.org/2.0/docs/devguide/data-binding)
 
 ## Declared properties ##
 
@@ -197,22 +217,35 @@ In this `properties` object you associated the property name to a string definin
 
 ```html
 <script>
-Polymer({
-  is: 'beer-list-item',
-
-  properties: {
-    name: String,
-    description: {
-      type: String,
-      value: ""
+  /**
+    * @customElement
+    * @polymer
+    */
+  class BeerListItem extends Polymer.Element {
+    static get is() { 
+      return 'beer-list-item'; 
     }
+
+    static get properties() {
+      return {
+        name: {
+          type: String,
+          value: ""
+        },
+        description: {
+          type: String,
+          value: ""
+        }
+      }
+    }      
   }
-})
+
+  window.customElements.define(BeerListItem.is, BeerListItem);
 </script>
 ```
 
 
-For more information about properties, see the [Polymer documentation](https://www.polymer-project.org/1.0/docs/devguide/properties.html)
+For more information about properties, see the [Polymer documentation](https://www.polymer-project.org/2.0/docs/devguide/properties)
 
 
 ## Additional experiments

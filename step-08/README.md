@@ -9,32 +9,16 @@ We begin by configuring the application entrypoint, `index.html`
 In order to make our app *progressive*, we need service workers to manage the offline mode. The Polymer CLI will generate a script `service-worker.js` when we build the app for production at the end of this step, but we need to register it to be used by the browser. We can start by opening the `index.html` file and adding the following script to the head element:
 
 ```html
+<!-- Load and register pre-caching Service Worker -->
 <script>
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', function() {
-      navigator.serviceWorker.register('/service-worker.js');
+      navigator.serviceWorker.register('./service-worker.js');
     });
   }
 </script>
 ```
 
-## Making all your imports relative
-
-Polymer CLI doesn't like absolute paths in imports, and in some configurations it blocks the build.
-
-Go to each one of your components and make the links relative, using `app` as base directory.
-
-Example, for `src/beer-list/beer-list.html`:
-```html
-<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
-<link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
-
-<link rel="import" href="../../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
-<link rel="import" href="../../bower_components/paper-input/paper-input.html">
-<link rel="import" href="../../bower_components/paper-item/paper-item.html">
-<link rel="import" href="../../bower_components/paper-listbox/paper-listbox.html">
-<link rel="import" href="../../bower_components/paper-material/paper-material.html">
-```
 
 ## Making sure that everything is served by your server
 
@@ -83,7 +67,7 @@ The manifest file `manifest.json` is needed to tell the browser that the app can
 {
   "name": "PWA Beers",
   "short_name": "pwa-beers",
-  "description": "A tutorial on PWA with Polymer 1.x",
+  "description": "A tutorial on PWA with Polymer 2.x",
   "start_url": "./",
   "display": "standalone",  
   "theme_color": "#9C27B0",
@@ -147,20 +131,24 @@ This is a file that lives at the top-level of the project and contains the build
 ```json
 {
   "entrypoint": "index.html",
-  "shell": "src/pwa-app/pwa-app.html",
+  "shell": "src/pwa-beers-app/pwa-beers-app.html",
   "fragments": [
     "src/beer-list/beer-list.html",
     "src/beer-details/beer-details.html"
   ],
-  "sourceGlobs": [
+  "sources": [
     "data/**/*",
     "img/**/*",
     "bower_components/font-roboto/fonts/**"
   ],
-  "includeDependencies": [
+  "extraDependencies": [
     "manifest.json",
     "bower_components/webcomponentsjs/webcomponents-lite.min.js"
-  ]
+  ],
+  "lint": {
+    "rules": ["polymer-2"]
+  }
+
 }
 ```
 
@@ -239,19 +227,21 @@ Delete these lines:
 We add an observer to the `page` property, and we use `Polymer.importHref` to import the fragments:
 
 ```js
-properties: {
-  page: {
-    type: String,
-    reflectToAttribute: true,
-    observer: '_pageChanged'
-  },
-},
-_pageChanged: function(page) {
-  console.debug("[pwa-beers] _pageChanged", page);
+static get properties() {
+  return {
+    page: {
+      type: String,
+      reflectToAttribute: true,
+      observer: '_pageChanged'
+    },
+  };
+}
+[...]
+_pageChanged(page) {
+  console.debug("[pwa-beers-app] _pageChanged", page);
   // load page import on demand.
-  this.importHref(
-    this.resolveUrl('../beer-' + page + '/beer-' + page + '.html'), null, null, true);
-},
+  Polymer.importHref(this.resolveUrl(`../beer-${page}/beer-${page}.html`), null, null, true);  
+}
 ```
 
 ## Using the CLI

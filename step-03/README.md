@@ -1,4 +1,4 @@
-# ![](/img/logo-25px.png) PWA Beers - Step 03 - A list of Beers
+# ![](../img/logo-25px.png) PWA Beers - Step 03 - A list of Beers
 
 > This is an optional step, that helps you dive deeper into Polymer. If your main interest in *PWA Beers* is the PWA aspect, you can simply copy the content of the `step-03` folder into your working folder `app`.
 
@@ -12,25 +12,34 @@ We begin by creating a new file for the element, `./src/beer-lists/beer-list.htm
 
 
 ```html
-<!-- Our beer-list will generate `beer-list-item` elements, so we import it -->
-<link rel="import" href="./beer-list-item.html">
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
 
 <dom-module id="beer-list">
   <template>
-    <!-- local DOM for your element -->
     <style>
-      /* CSS rules for your element */
+      :host {
+        display: block;
+      }
     </style>
   </template>
 
   <script>
-    // element registration
-    Polymer({
-      is: "beer-list",
-      // add properties and methods on the element's prototype
-      properties: {
+    /**
+     * @customElement
+     * @polymer
+     */
+    class BeerList extends Polymer.Element {
+      static get is() { 
+        return 'beer-list'; 
       }
-    });
+
+      static get properties() {
+        return {
+        }
+      }      
+    }
+
+    window.customElements.define(BeerList.is, BeerList);
   </script>
 </dom-module>
 ```
@@ -39,23 +48,31 @@ We begin by creating a new file for the element, `./src/beer-lists/beer-list.htm
 ## Defining the model
 
 We are going to model our (ever growing) beer collection as a JavaScript array in our `beer-list` element.
-We will use the element's `ready` function, a function that is called when the element has been loaded and instantiated, and that is often used to initialize variables.
+We will use the element's `connectedCallback` function, a function that is called when the element has been loaded and instantiated, and that is often used to initialize variables.
 
 ```html
 <script>
-  // element registration
-  Polymer({
-    is: "beer-list",
-    // add properties and methods on the element's prototype
-    properties: {
-      beers: {
-        type: Array,
-        // When initializing a property to an object or array value, use a function to ensure that each element
-        // gets its own copy of the value, rather than having an object or array shared across all instances of the element
-        value: function() { return []; }
+  /**
+    * @customElement
+    * @polymer
+    */
+  class BeerList extends Polymer.Element {
+    static get is() { 
+      return 'beer-list'; 
+    }
+
+    static get properties() {
+      return {
+        beers: {
+          type: Array,
+          // When initializing a property to an object or array value, use a function to ensure that each element
+          // gets its own copy of the value, rather than having an object or array shared across all instances of the element
+          value: function() { return []; }
+        }
       }
-    },
-    ready: function() {
+    }   
+
+    connectedCallback() {
       this.beers = [
         {
           alcohol: 8.5,
@@ -73,8 +90,10 @@ We will use the element's `ready` function, a function that is called when the e
           description: "This Trappist beer possesses a beautiful coppery colour that makes it particularly attractive. Topped with a creamy head, it gives off a slight fruity apricot smell from the fermentation. The aroma felt in the mouth is a balance confirming the fruit nuances revealed to the sense of smell. This traditional Belgian beer is best savoured at cellar temperature "
         }
       ];
-    }
-  });
+    }   
+  }
+
+  window.customElements.define(BeerList.is, BeerList);
 </script>
 ```
 
@@ -85,7 +104,7 @@ As you can see, for each beer we have the `name` and `description` properties th
 
 ## Data-binding
 
-A reasonable thing to do for our `beer-list` would be to spawn a `beer-list-element` for each beer in the `beers` array. How can we do that? By using Polymer's [data binding helper element](https://www.polymer-project.org/1.0/docs/devguide/templates.html), concretely a template repeater (`dom-repeat`):
+A reasonable thing to do for our `beer-list` would be to spawn a `beer-list-element` for each beer in the `beers` array. How can we do that? By using Polymer's [data binding helper element](https://www.polymer-project.org/2.0/docs/devguide/templates), concretely a template repeater (`dom-repeat`):
 
 ```html
 <dom-module id="beer-list">
@@ -94,10 +113,12 @@ A reasonable thing to do for our `beer-list` would be to spawn a `beer-list-elem
       /* CSS rules for your element */
     </style>
     <div class="beers">
-      <template is="dom-repeat" items="{{beers}}">
-        <beer-list-item name="{{item.name}}" description="{{item.description}}">
-        </beer-list-item>
-      </template>
+      <dom-repeat items="{{beers}}">
+        <template>
+          <beer-list-item name="{{item.name}}" description="{{item.description}}">
+          </beer-list-item>
+        </template>
+      </dom-repeat>
     </div>
   </template>
 </dom-module>
@@ -108,11 +129,12 @@ The template repeater is a specialized template that binds to an array. It creat
 - `item`: The array item used to create this instance
 - `index`: The index of item in the array
 
-For more information about the template repeater, see the [Polymer documentation](https://www.polymer-project.org/1.0/docs/devguide/templates.html#dom-repeat).
+For more information about the template repeater, see the [Polymer documentation](https://www.polymer-project.org/2.0/docs/devguide/templates#dom-repeat).
+
 
 ## Using the new element
 
-In the `./src/pwa-app/pwa-app.html` file we aren't going to use directly `beer-list-item` elements anymore, but a simple `beer-list`. Let's replace the import of `beer-list-item` by an import of `beer-list`:
+In the `./src/pwa-beers-app/pwa-beers-app.html` file we aren't going to use directly `beer-list-item` elements anymore, but a simple `beer-list`. Let's replace the import of `beer-list-item` by an import of `beer-list`:
 
 ```html
 <!-- Import `beer-list` element -->
@@ -146,8 +168,6 @@ In the element's `dom-model` you have access to the beers variable, you can then
 <div>Number of beers in list: {{beers.length}}</div>
 ```
 
-*Note: unlike precedent Polymer versions, Polymer 1.0 required the double curly-brake syntax (`{{}}`) to be used as the only element inside a DOM node. So the precedent line needed to be rewritten as `<div>Number of beers in list: <span>{{beers.length}}</span></div>`. This restriction was lifted on Polymer 1.2.*
-
 ### Play with `dom-repeat`
 
 Create a repeater in `beer-list` that constructs a simple table:
@@ -155,9 +175,11 @@ Create a repeater in `beer-list` that constructs a simple table:
 ```html
 <table>
   <tr><th>Row number</th></tr>
-  <template is="dom-repeat" items="[0, 1, 2, 3, 4, 5, 6, 7]">
-    <tr><td>{{item}}</td></tr>
-  </template>
+  <dom-repeat items="[0, 1, 2, 3, 4, 5, 6, 7]">
+    <template>
+      <tr><td>{{item}}</td></tr>
+    </template>
+  </dom-repeat>
 </table>
 ```
 

@@ -1,18 +1,21 @@
-<link rel="import" href="/bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
 
-<link rel="import" href="/bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
-<link rel="import" href="/bower_components/paper-input/paper-input.html">
-<link rel="import" href="/bower_components/paper-item/paper-item.html">
-<link rel="import" href="/bower_components/paper-listbox/paper-listbox.html">
-<link rel="import" href="/bower_components/paper-material/paper-material.html">
+<link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
 
-<!-- Our beer-list will generate `beer-list-item` elements, so we import it -->
-<link rel="import" href="./beer-list-item.html">
+
+<link rel="import" href="../../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="../../bower_components/paper-listbox/paper-listbox.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+
+<link rel="import" href="../beer-list/beer-list-item.html">
 
 <dom-module id="beer-list">
   <template>
-    <!-- local DOM for your element -->
     <style include="iron-flex iron-flex-alignment">
+      :host {
+        display: block;
+      }
       paper-material {
         margin: 10px;
         padding: 10px;
@@ -22,81 +25,88 @@
         min-width: 150px;
         min-height: 50px;
       }
-      .sidebar paper-input {
-        margin-bottom: 16px;
-      }
       .beers {
         min-width: 400px;
       }
     </style>
-
     <div class="layout horizontal wrap start center-justified">
       <paper-material class="sidebar">
         <!--Sidebar content-->
         <div>Search: <paper-input value="{{filterText}}"></paper-input></div>
         <div>Current search:</div>
         <div>{{filterText}}</div>
-        <div>
-          Sort by:
+        <div>  
+          Sort by: 
           <paper-dropdown-menu selected-item="{{criterion}}">
-            <paper-listbox class="dropdown-content"  selected="0">
-              <template is="dom-repeat" items="{{criteria}}">
-                <paper-item data-name="[[item.dataName]]">[[item.label]]</paper-item>
-              </template>
+            <paper-listbox slot="dropdown-content" selected="0">
+              <dom-repeat items="{{criteria}}">
+                <template>
+                  <paper-item data-name="[[item.dataName]]">[[item.label]]</paper-item>
+                </template>
+              </dom-repeat>
             </paper-listbox>
           </paper-dropdown-menu>
-        </div>
+        </div>            
         <div>
           <input type="checkbox" checked="{{descendingSort::change}}" name="sortingOrder">
-          Descending sort
-        </div>
+          Descending sort 
+        </div> 
       </paper-material>
-      <div class="beers layout flex" >
-        <template id="beerList" is="dom-repeat" items="{{beers}}" filter="beerFilter" sort="beerSorter">
-          <beer-list-item name="{{item.name}}" description="{{item.description}}" alcohol="{{item.alcohol}}">
-          </beer-list-item>
-        </template>
-        <paper-material>Number of beers in list: {{currentBeers}}</paper-material>
-      </div>
+      <div class="beers layout flex">
+        <dom-repeat  id="beerList" items="{{beers}}"  filter="[[computeBeerFilter(filterText)]]" sort="[[computeBeerSorter(criterion, descendingSort)]]">
+          <template>
+            <beer-list-item name="{{item.name}}" description="{{item.description}}">
+            </beer-list-item>
+          </template>
+        </dom-repeat>
+        <paper-material>Number of beers in list: {{currentBeers}}</paper-material>  
+      </div>        
     </div>
   </template>
 
   <script>
-    // element registration
-    Polymer({
-      is: "beer-list",
-      // add properties and methods on the element's prototype
-      properties: {
-        beers: {
-          type: Array,
-          // When initializing a property to an object or array value, use a function to ensure that each element
-          // gets its own copy of the value, rather than having an object or array shared across all instances of the element
-          value: function() { return []; }
-        },
-        filterText: {
-          type: String,
-          observer: "criteriaChanged",
-          value: ""
-        },
-        criterion: {
-          type: Object,
-          observer: "criteriaChanged"
-        },
-        currentBeers: {
-          type: String,
-          computed: "getCurrentBeers(beers, filterText)"
-        },
-        descendingSort: {
-          type: Boolean,
-          observer: "criteriaChanged",
-          value: false
-        },
-      },
-      ready: function() {
-        this.criteria = [
-          { dataName: "name", label: "Alphabetical"},
-          { dataName: "alcohol", label: "Alcohol content" }
-        ];
+    /**
+     * @customElement
+     * @polymer
+     */
+    class BeerList extends Polymer.Element {
+      static get is() { 
+        return 'beer-list'; 
+      }
+
+      static get properties() {
+        return {
+          beers: {
+            type: Array,
+            // When initializing a property to an object or array value, use a function to ensure that each element
+            // gets its own copy of the value, rather than having an object or array shared across all instances of the element
+            value: function() { return []; }
+          },
+          filterText: {
+            type: String,
+            value: ''
+          },
+          currentBeers: {
+            type: String,
+            computed: "getCurrentBeers(beers, filterText)"
+          },
+          criteria: {
+            type: Array,
+            value: function() { 
+              return [
+                { dataName: "name", label: "Alphabetical"},
+                { dataName: "alcohol", label: "Alcohol content" }
+              ];
+            }
+          },
+          descendingSort: {
+            type: Boolean,
+            value: false
+          }
+        }
+      }   
+
+      connectedCallback() {
         this.beers = [
           {
             "alcohol": 6.8,
@@ -124,31 +134,44 @@
             "description": "This Trappist beer possesses a beautiful coppery colour that makes it particularly attractive. Topped with a creamy head, it gives off a slight fruity apricot smell from the fermentation. The aroma felt in the mouth is a balance confirming the fruit nuances revealed to the sense of smell. This traditional Belgian beer is best savoured at cellar temperature "
           }
         ];
-      },
-      criteriaChanged: function(newValue, oldValue) {
-        console.debug(this.criterion)
-        this.$.beerList.render();
-      },
-      beerFilter:  function(item) {
-        return item.name.match(new RegExp(this.filterText, 'i'));
-      },
-      getCurrentBeers: function() {
-        var current = 0;
+      }   
+
+
+      computeBeerFilter(filterText) {
+        if (!filterText) {
+          // set filter to null to disable filtering
+          return null;
+        }
+        return function(item) {
+          return item.name.match(new RegExp(filterText, 'i'));
+        }
+      }
+
+      getCurrentBeers() {
+        var count = 0;
+
         for (var i in this.beers) {
-          if (this.beerFilter(this.beers[i])) {
-            current++;
+          if (this.beers[i].name.match(new RegExp(this.filterText, 'i'))) {
+            count++;
           }
         }
-        return current;
-      },
-      beerSorter: function(a, b) {
-        if (!this.criterion) return 0;
-        var invert = 1;
-        if (this.descendingSort) invert = -1;
-        if ( a[this.criterion.dataName] === b[this.criterion.dataName] ) return 0;
-        if ( a[this.criterion.dataName] < b[this.criterion.dataName] ) return -1*invert;
-        if ( a[this.criterion.dataName] > b[this.criterion.dataName] ) return 1*invert;
-      },
-    });
+        return count;
+      }
+
+      computeBeerSorter(criterion, descendingSort) {
+        console.log('computeBeerSorter')
+        return function(a,b){
+          if (!criterion) return 0;
+          var invert = 1;
+          if (descendingSort) invert = -1;
+          if ( a[criterion.dataName] === b[criterion.dataName] ) return 0;
+          if ( a[criterion.dataName] < b[criterion.dataName] ) return -1*invert;
+          if ( a[criterion.dataName] > b[criterion.dataName] ) return 1*invert; 
+        }
+      }
+      
+    }
+
+    window.customElements.define(BeerList.is, BeerList);
   </script>
 </dom-module>

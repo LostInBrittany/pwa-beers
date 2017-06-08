@@ -1,8 +1,8 @@
-# A tutorial on PWA with Polymer 1.x. With beers.
+# A tutorial on PWA with Polymer 2.x. With beers.
 
-*A work-in-progress tutorial for creating a Progressive Web App (PWA) with Polymer 1.x*
+*A work-in-progress tutorial for creating a Progressive Web App (PWA) with Polymer 2.x*
 
-I have built this [PWA with Polymer]() tutorial as a quick entry point to coding [Progressive Web Apps]() with [Polymer](https://www.polymer-project.org/). If you want to dive deeper into Polymer, I can suggest my [PolymerBeers](https://github.com/LostInBrittany/polymer-beers) tutorial.
+I have built this [PWA with Polymer](https://github.com/LostInBrittany/pwa-beers) tutorial as a quick entry point to coding [Progressive Web Apps](https://developers.google.com/web/progressive-web-apps/) with [Polymer](https://www.polymer-project.org/). If you want to dive deeper into Polymer, I can suggest my [PolymerBeers](https://github.com/LostInBrittany/polymer-beers) tutorial.
 
 For the last several years, I've taught a web-development module in an Engineering School with a rather restrictive network. As I plan to use this tutorial in next year module, in order to explain PWA and Polymer to our students, I needed a tutorial that could be played without network acces, i.e. without Bower or Gulp or even without [Polymer CLI](https://github.com/Polymer/polymer-cli). So *Progreessive Web Apps with Polymer* needed to be able to be done even behind a very restrictive proxy, and all the dependencies are included inside the git project.
 
@@ -26,7 +26,6 @@ The tutorial guides you through the entire process of building a simple applicat
 You can go through the whole tutorial in a couple of hours or you may want to spend a pleasant day really digging into it. If you're looking for a shorter introduction to PWA and or Polymer, check out the official website.
 
 
-
 [![Screenshot](/img/pwa-beers-final-01.t.jpg)](/img/pwa-beers-final-01.jpg)  
 [![Screenshot](/img/pwa-beers-final-02.t.jpg)](/img/pwa-beers-final-02.jpg)  
 
@@ -44,7 +43,6 @@ If you already have a web server (Apache, Nginx, ...) in your computer, you can 
 - Web Server for Chrome: a Chrome/Chromium application that gives you a web server embedded in your browser. You can install it [from the Chrome Web Store](https://chrome.google.com/webstore/detail/web-server-for-chrome/ofhbbkphhbklhfoeikjpcbhemlocgigb?hl=en) .
 
   After installing the Web Server for Chrome app, click on the Apps shortcut on the bookmarks bar:
-
 
 
   [![Web Server for Chrome](img/chromewebserver-00.t.png)](img/chromewebserver-00.png)
@@ -94,14 +92,15 @@ Ideally you should install Polymer CLI. Polymer CLI is a *NodeJS* based tool, an
   npm install -g polymer-cli
   ```
 
-Then you'll be able to use `polymer`command to create, build and serve your PWA.
+Then you'll be able to use `polymer` command to create, build and serve your PWA.
+
+> Note: in order to use Polymer CLI with Polymer 2.x, you need a version of Polymer CLI greater than 0.18. If you have an older version, please install a more recent one.
 
 
 ## How is the tutorial organized ##
 
 As the computers used for the courses haven't Git, we have structured the project to allow a Git-less use. The `app` directory is the main directory of the project, the working version of the code. The tutorial is divided in steps, each one in its own directory:
 
-- [Step 00 - Anatomy of a Progressive Web App with Polymer](./step-00/)
 - [Step 01 - An empty application](./step-01/)
 - [Step 02 - Creating a new element](./step-02/)
 - [Step 03 - A list of Beers](./step-03/)
@@ -118,4 +117,4 @@ In each step directory you have a README file that explain the objective of the 
 
 OK, now you're ready to follow this tutorial. If you're familiar with git, begin by cloning this repository (`git clone https://github.com/LostInBrittany/pwa-beers-tutorial`), else you can simply download the zipped file from [GitHub](https://github.com/LostInBrittany/pwa-beers/archive/master.zip).
 
-Now can go to [step-00](./step-00) and begin to follow the README of that step. Let's begin!
+Now can go to [step-01](./step-01) and begin to follow the README of that step. Let's begin!

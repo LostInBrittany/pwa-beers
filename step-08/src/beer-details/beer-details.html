@@ -1,8 +1,7 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+
+
 <link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
-
-<link rel="import" href="../../bower_components/paper-material/paper-material.html">
-
-
 
 <dom-module id="beer-details">
   <template>
@@ -132,30 +131,46 @@
       on-response="gotBeers"
       debounce-duration="300"></iron-ajax>
   </template>
-  <script>
-    Polymer({
-      is: 'beer-details',
 
-      properties: {
-        id: String,
-        url: {
-          type: String,
-          computed: "getUrl(id)"
+  <script>
+    /**
+     * @customElement
+     * @polymer
+     */
+    class BeerDetails extends Polymer.Element {
+      static get is() { 
+        return 'beer-details'; 
+      }
+
+      static get properties() {
+        return {
+          id: {
+            type: String,
+            value: ""
+          },
+          url: {
+            type: String,
+            computed: "getUrl(id)"
+          }
         }
-      },
-      getUrl: function(id) {
+      } 
+      
+      getUrl(id) {
         console.debug("getUrl", id)
         return "../../data/beers/details/"+id+".json";
-      },
-
-      gotBeers: function(event, ironRequest) {
+      }
+      
+      gotBeers(event, ironRequest) {
         this.beer = ironRequest.response;
         console.log("Beer", this.beer)
         this.mainImg = this.beer.img;
-      },
-      setImage: function(evt) {
-        this.mainImg = evt.srcElement.beer;
       }
-    })
+
+      setImage(evt) {
+        this.mainImg = evt.srcElement.beer;
+      }    
+    }
+
+    window.customElements.define(BeerDetails.is, BeerDetails);
   </script>
 </dom-module>
