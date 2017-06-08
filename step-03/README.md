@@ -8,7 +8,7 @@ This element will use a JavaScript array as model and automatically generate a `
 
 ## Creating the element file
 
-We begin by creating a new file for the element, `./src/beer-lists/beer-list.html`. Inside it we put a basic Polymer element definition:
+We begin by creating a new file for the element, `./src/beer-list/beer-list.html`. Inside it we put a basic Polymer element definition:
 
 
 ```html
