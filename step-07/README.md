@@ -110,7 +110,7 @@ The *iron-ajax* calls the file according to the beer id.
 
 ## Routing
 
-In `./src/pwa-app/pwa-app.html` we are adding a new instance of `app-route` to listen to the `/details` path and capture the id of the beer:
+In `./src/pwa-beers-app/pwa-beers-app.html` we are adding a new instance of `app-route` to listen to the `/details` path and capture the id of the beer:
 
 ```html
 <app-route route="{{route}}" pattern="/details/:id" data="{{detailsData}}"></app-route>
