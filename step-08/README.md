@@ -143,11 +143,17 @@ This is a file that lives at the top-level of the project and contains the build
   ],
   "extraDependencies": [
     "manifest.json",
-    "bower_components/webcomponentsjs/webcomponents-lite.min.js"
+    "bower_components/webcomponentsjs/webcomponents-lite.js"
   ],
   "lint": {
     "rules": ["polymer-2"]
-  }
+  },
+  "builds": [
+    {
+      "name": "bundled",
+      "preset": "es5-bundled"
+    }
+  ]
 
 }
 ```
